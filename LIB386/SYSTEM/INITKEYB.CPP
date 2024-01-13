@@ -33,7 +33,9 @@ void	ClearKeyboard()
 #else //_WIN32
 
 //──────────────────────────────────────────────────────────────────────────
+#ifdef USE_MSS
 #include	<ail\mss.h>
+#endif
 #include	<system\exit.h>
 
 //──────────────────────────────────────────────────────────────────────────
@@ -56,11 +58,13 @@ void	InitKeyboard()
 
 	if(Old_PM09_Sel) return		;
 
+#ifdef USE_MSS
 	if(	!AIL_vmm_lock_range(&KeybCodeStart, &KeybCodeEnd)	OR
 		!AIL_vmm_lock_range(&KeybDataStart, &KeybDataEnd)		)
 	{
 		exit(1);
 	}
+#endif
 
 //----- Save Old Protected Mode Vector 09 ------
 	r.x.eax = 0x3509		;//	Function 35h, for Int 9
@@ -101,8 +105,10 @@ void	ClearKeyboard()
 	Old_PM09_Sel = 0		;
 	Old_PM09_Off = 0		;
 
+#ifdef USE_MSS
 	AIL_vmm_unlock_range(&KeybCodeStart, &KeybCodeEnd)	;
 	AIL_vmm_unlock_range(&KeybDataStart, &KeybDataEnd)	;
+#endif
 }
 
 //──────────────────────────────────────────────────────────────────────────

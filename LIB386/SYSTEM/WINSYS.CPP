@@ -81,9 +81,9 @@ void	InitWindow( HANDLE hinstance, int nCmdShow, char *title)
    	wc.style	= 0				;
    	wc.cbClsExtra	= 0				;
    	wc.cbWndExtra	= 0				;
-   	wc.hInstance	= hinstance			;
+   	wc.hInstance	= (HINSTANCE) hinstance			;
 //   	wc.hIcon	= LoadIcon( hinstance, MAKEINTRESOURCE(0) );
-   	wc.hIcon	= LoadIcon( hinstance, "ICON" );
+   	wc.hIcon	= LoadIcon( (HINSTANCE) hinstance, "ICON" );
    	wc.hIconSm 	= NULL				;
 /*
    	wc.hIconSm 	= LoadImage( hinstance,
@@ -118,7 +118,7 @@ void	InitWindow( HANDLE hinstance, int nCmdShow, char *title)
    	   	 GetSystemMetrics( SM_CYSCREEN ),
    	   	 NULL,
    	   	 NULL,
-   	   	 hinstance,
+   	   	 (HINSTANCE) hinstance,
    	   	 NULL );
 
    	if( !hWnd )

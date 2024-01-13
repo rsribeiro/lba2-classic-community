@@ -7,8 +7,10 @@
 #include	<system\hqfile.h>
 #include	<system\hqrress.h>
 
+#ifdef USE_MSS
 #ifndef	_WIN32
 #include	<ail\mss.h>
+#endif
 #endif
 
 #include	<string.h>
@@ -75,10 +77,12 @@ void	HQR_Lock_Ressource(T_HQR_HEADER *header)
 {
 	header = header	;
 
+#ifdef USE_MSS
 	AIL_vmm_lock((void*)header, sizeof(T_HQR_HEADER) +
 				sizeof(T_HQR_BLOC) * header->MaxIndex   ) ;
 
 	AIL_vmm_lock(header->Buffer, header->MaxSize+RECOVER_AREA);
+#endif
 }
 
 #endif//_WIN32
@@ -124,10 +128,12 @@ void	HQR_Free_Ressource(T_HQR_HEADER *header)
 		return		;
 	}
 
+#ifdef USE_MSS
 	AIL_vmm_unlock((void*)header, sizeof(T_HQR_HEADER) +
 				  sizeof(T_HQR_BLOC) * header->MaxIndex ) ;
 
 	AIL_vmm_unlock(header->Buffer, header->MaxSize+RECOVER_AREA);
+#endif
 
 	Free(header->Buffer)	;
 	Free(header)		;

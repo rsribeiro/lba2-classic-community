@@ -30,7 +30,9 @@ void	ClearTimer()
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 #include	<system\exit.h>
+#ifdef USE_MSS
 #include	<ail\mss.h>
+#endif
 
 //-------------------------------------------------------------------------
 #include	<i86.h>
@@ -70,16 +72,20 @@ extern  U32	TimerEnd	;
 //-------------------------------------------------------------------------
 void LockVMMTimer()
 {
+#ifdef USE_MSS
 	if(	!AIL_vmm_lock_range(&TimerStart, &TimerEnd)		OR
 		!AIL_vmm_lock_range(&TimerDataStart, &TimerDataEnd)		)
 		exit(1);
+#endif
 }
 
 //-------------------------------------------------------------------------
 static inline void UnlockVMMTimer()
 {
+#ifdef USE_MSS
 	AIL_vmm_unlock_range(&TimerStart, &TimerEnd);
 	AIL_vmm_unlock_range(&TimerDataStart, &TimerDataEnd);
+#endif
 }
 /*
 //-------------------------------------------------------------------------
