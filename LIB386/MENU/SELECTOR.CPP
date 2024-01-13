@@ -13,6 +13,7 @@
 //──────────────────────────────────────────────────────────────────────────
 #define MAX_FILES	800
 #define MAX_DIRS	100
+#define _MAX_NAME (8+3)
 
 #ifndef	MAX_NAME
 #define	MAX_NAME	MAX_FNAME
