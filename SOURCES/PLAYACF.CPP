@@ -71,6 +71,7 @@ void	InitAcf( void )
 
 	EndListAcf = ListAcf + LoadMallocFileSize ;
 
+#ifdef USE_SMACKER
 #ifdef	LBA_EDITOR
 	// dispo Screen,ScreenAux,BufSpeak
 	SmackRegisterMemory( Screen, (ModeDesiredX*ModeDesiredY+RECOVER_AREA)*3 ) ;
@@ -81,6 +82,7 @@ void	InitAcf( void )
 	SmackRegisterMemory( (void*)BufferSmack, SIZE_BUFFER_SMACK ) ;
 #else
 	SmackRegisterMemory( MainBuffer, SizeOfMemAllocated ) ;
+#endif
 #endif
 }
 
@@ -217,6 +219,7 @@ void	PlayAllAcf( void )
 
 S32	PlayAcf( char *name )
 {
+#ifdef USE_SMACKER
 	Smack		*smk	      	;
 	U32		frame	      	;
 	S32		n 		;
@@ -485,6 +488,9 @@ fin_play:
 #endif
 
 	return ret ;
+#else
+	return 0 ;
+#endif
 }
 
 //---------------------------------------------------------------------------

@@ -1,54 +1,42 @@
 # name the compilers
+CP = wpp386
+CC = wcc386
+WL = wlib
+LL = wlink
+WRC = wrc
+ASM = ml
+PCHDIR =
 
-!ifdef %RAMSYS
+AFLAGS  = /DSTACK_CALL /nologo /Cx /Zm /Zi /c /WX /Sa /Zd /omf
+CFLAGS  = /6s /d3 /oneatxz /s /wx /mf /hd /zp8 /v /fh=$(PCHDIR)lba.pch
+LLFLAGS = OP CASEEXACT,STACK=7000,SYMF,MAP,DOSSEG,VERBOSE
+LFLAGS  = /c /b /l
 
-WATCOM	= e:\compil\watcom
-ASM	= e:\compil\masm611\bin\ml
-PCHDIR	= e:\
-
+!ifeq BT NT
+CFLAGS	+= /D_WIN32 /bt=NT
+AFLAGS	+= /D_WIN32
+LLFLAGS += SYSTEM win32 OP STUB=WIN\WINSTUB.EXE
+OBJETS2 = JOYSTICK.OBJ
 !else
-
-WATCOM	= $(%WATCOM)
-!ifdef %MASM
-ASM	= $(%MASM)\bin\ml
-!else
-ASM	= f:\compil\masm611\bin\ml
-!endif
-PCHDIR	= f:
-
-!endif
-
-!ifdef %NT
-CP = $(WATCOM)\binnt\wpp386
-CC = $(WATCOM)\binnt\wcc386
-WL = $(WATCOM)\binnt\wlib
-LL = $(WATCOM)\binnt\wlink
-!else
-CP = $(WATCOM)\binw\wpp386
-CC = $(WATCOM)\binw\wcc386
-WL = $(WATCOM)\binw\wlib
-LL = $(WATCOM)\binw\wlink
+CFLAGS  += /D_DOS4GW /bt=DOS /DDOS4GW
+AFLAGS	+= /D_DOS4GW
+LLFLAGS += SYSTEM dos4g DEBUG DWARF ALL
+OBJETS2 = CRITICAL.OBJ HERCULE.OBJ HERCUL_A.OBJ KEYB.OBJ
 !endif
 
-AFLAGS  = /Cx /Zm /Zi /c /W0 /Sa /nologo
-CFLAGS  = /hw /oneatxz /zp2 /5r /zq /s /w3 /bt=DOS /fh=$(PCHDIR)lba.pch /DDOS4GW
-LLFLAGS = SYSTEM dos4g OP CASEEXACT,QUIET,STACK=7000,DOSSEG,SYMF,MAP
-
-!ifdef %LBA2HD
-CFLAGS = $+$(CFLAGS)$- /DONE_GAME_DIRECTORY /d1 /DCDROM
+!ifdef LBA2HD
+CFLAGS += /DONE_GAME_DIRECTORY /DCDROM /DLBA_GAME
+EXE_SUFFIX = LBA2HD
+#/DDEBUG_TOOLS /DTEST_TOOLS
+!else
+!ifdef LBA2DEMO
+CFLAGS += /DDEMO /DONE_GAME_DIRECTORY
+EXE_SUFFIX = LBA2DEMO
 #/DDEBUG_TOOLS
-#/DTEST_TOOLS
-
-LLFLAGS = $+$(LLFLAGS)$- DEBUG ALL OP STUB=MINISTUB.EXE
 !else
-!ifdef %LBA2DEMO
-CFLAGS = $+$(CFLAGS)$- /d1 /DDEMO /DONE_GAME_DIRECTORY
-#/d2
-#/DDEBUG_TOOLS
-LLFLAGS = $+$(LLFLAGS)$- DEBUG ALL OP STUB=MINISTUB.EXE
-!else
-CFLAGS =  $+$(CFLAGS)$- /DDEBUG_TOOLS /d2 /DCDROM
-LLFLAGS = $+$(LLFLAGS)$- DEBUG ALL OP STUB=STUB.EXE
+CFLAGS  += /DDEBUG_TOOLS /DCDROM /DLBA_GAME
+OBJETS2 +=
+EXE_SUFFIX = DEBUG
 !endif
 !endif
 
@@ -57,26 +45,67 @@ LLFLAGS = $+$(LLFLAGS)$- DEBUG ALL OP STUB=STUB.EXE
 .EXTENSIONS:
 .EXTENSIONS: .exe .obj .asm .c .cpp
 
-VERSION	= version.obj
+VERSION	= VERSION.OBJ
 
-OBJETS  = perso.obj bezier.obj diskfunc.obj fiche.obj extra.obj incrust.obj  &
-	  global.obj input.obj grille.obj grille_a.obj func.obj cheatcod.obj &
-	  animtex.obj impact.obj buggy.obj wagon.obj ambiance.obj gamemenu.obj &
-	  fire.obj plasma.obj pof.obj patch.obj geretrak.obj gerelife.obj &
-	  flow.obj flow_a.obj dart.obj hercule.obj hercul_a.obj validpos.obj &
-	  dec_xcf.obj playacf.obj copy.obj object.obj savegame.obj mem.obj &
-	  intext.obj extfunc.obj rain.obj compress.obj lzss.obj Message.obj &
-	  invent.obj comporte.obj hologlob.obj holoplan.obj holobody.obj &
-	  sort.obj config.obj credits.obj zv.obj scan.obj keyb.obj music.obj &
-	  critical.obj
+OBJETS = BEZIER.OBJ FICHE.OBJ EXTRA.OBJ GLOBAL.OBJ INPUT.OBJ GRILLE.OBJ GRILLE_A.OBJ &
+			FUNC.OBJ CHEATCOD.OBJ ANIMTEX.OBJ IMPACT.OBJ BUGGY.OBJ WAGON.OBJ FIRE.OBJ &
+			PLASMA.OBJ POF.OBJ PATCH.OBJ GERETRAK.OBJ FLOW.OBJ FLOW_A.OBJ DART.OBJ &
+			VALIDPOS.OBJ DEC_XCF.OBJ PLAYACF.OBJ COPY.OBJ MEM.OBJ COMPRESS.OBJ LZSS.OBJ &
+			HOLOBODY.OBJ SORT.OBJ ZV.OBJ SCAN.OBJ MUSIC.OBJ
 
-LIBS	= ..\tools\perso\3dext\3dextg.lib
+OBJETS += PERSO.OBJ DISKFUNC.OBJ INCRUST.OBJ AMBIANCE.OBJ GAMEMENU.OBJ GERELIFE.OBJ &
+			OBJECT.OBJ SAVEGAME.OBJ INTEXT.OBJ EXTFUNC.OBJ RAIN.OBJ MESSAGE.OBJ &
+			INVENT.OBJ COMPORTE.OBJ HOLOGLOB.OBJ HOLOPLAN.OBJ CONFIG.OBJ CREDITS.OBJ
 
-EXE     = LBA0
+LIB386_PATH = ..\LIB386
+!ifeq BT NT
+LIBS  = $(LIB386_PATH)\3D\NT_3D.LIB
+LIBS += $(LIB386_PATH)\AIL\NT_AILS.LIB
+LIBS += $(LIB386_PATH)\ANIM\NT_ANIS.LIB
+LIBS += $(LIB386_PATH)\FILEIO\NT_FIOS.LIB
+LIBS += $(LIB386_PATH)\MENU\NT_MENS.LIB
+LIBS += $(LIB386_PATH)\OBJECT\NT_OBJ.LIB
+LIBS += $(LIB386_PATH)\POL_WORK\NT_POLY.LIB
+LIBS += $(LIB386_PATH)\SMACKER\NT_SMKS.LIB
+LIBS += $(LIB386_PATH)\SVGA\NT_SVGS.LIB
+LIBS += $(LIB386_PATH)\SYSTEM\NT_SYSS.LIB
+LIBS += 3DEXT\NT_EXT.LIB
+LIBS2 = winmm.lib strmiids.lib ddraw.lib
+EXE   = LBA2_NT_$(EXE_SUFFIX)
+!else
+LIBS  = $(LIB386_PATH)\3D\DOS_3D.LIB
+LIBS += $(LIB386_PATH)\AIL\DOS_AILS.LIB
+LIBS += $(LIB386_PATH)\ANIM\DOS_ANIS.LIB
+LIBS += $(LIB386_PATH)\FILEIO\DOS_FIOS.LIB
+LIBS += $(LIB386_PATH)\MENU\DOS_MENS.LIB
+LIBS += $(LIB386_PATH)\OBJECT\DOS_OBJ.LIB
+LIBS += $(LIB386_PATH)\POL_WORK\DOS_POLY.LIB
+LIBS += $(LIB386_PATH)\SMACKER\DOS_SMKS.LIB
+LIBS += $(LIB386_PATH)\SVGA\DOS_SVGS.LIB
+LIBS += $(LIB386_PATH)\SYSTEM\DOS_SYSS.LIB
+LIBS += 3DEXT\DOS_EXT.LIB
+LIBS2 =
+EXE   = LBA2_DOS_$(EXE_SUFFIX)
+!endif
 
-$(EXE).exe: $(VERSION) $(LIBS)
-	echo    Link $(EXE).EXE
-	*$(LL) $(LLFLAGS) NAME $(EXE).exe LIB $(LIBS) FILE *.obj
+BUILD_DIR = BUILD
+
+# This is the GNU Make equivalent of CURDIR :=
+CURDIR   = $+ $(%cdrive):$(%cwd) $-
+
+!ifeq BT NT
+$(BUILD_DIR)\$(EXE).exe: $(VERSION) $(LIBS) $(OBJETS) $(OBJETS2)
+	*$(LL) Name $@ $(LLFLAGS) Library { $LIBS2 $LIBS } FILE { $OBJETS $OBJETS2 $VERSION }
+	$(WRC) -q -ad WIN\LBA2.RES $@
+!else
+$(BUILD_DIR)\$(EXE).exe: $(VERSION) $(LIBS) $(OBJETS) $(OBJETS2)
+	*$(LL) Name $@ $(LLFLAGS) Library { $LIBS2 $LIBS } FILE { $OBJETS $OBJETS2 $VERSION }
+!endif
+
+$(LIBS):
+	cd $^:
+	$(MAKE) "BT=$(BT)" "LBA2HD=$(LBA2HD)" "LBA2DEMO=$(LBA2DEMO)"
+	@cd $(CURDIR)
 
 .c.obj :
 	$(CC) $^& $(CFLAGS)
@@ -87,14 +116,25 @@ $(EXE).exe: $(VERSION) $(LIBS)
 .asm.obj :
 	$(ASM) $(AFLAGS) $^&.ASM
 
-$(VERSION): version.cpp $(OBJETS)
-	$(CP) version $(CFLAGS)
+$(VERSION): VERSION.CPP $(OBJETS)
+	$(CP) VERSION $(CFLAGS)
 
-message.obj: message.cpp
+MESSAGE.OBJ: MESSAGE.CPP
 	del $(PCHDIR)lba.pch
-	$(CP) message $(CFLAGS)
+	$(CP) MESSAGE $(CFLAGS)
 
-gamemenu.obj: gamemenu.cpp
+GAMEMENU.OBJ: GAMEMENU.CPP
 	del $(PCHDIR)lba.pch
-	$(CP) gamemenu $(CFLAGS)
+	$(CP) GAMEMENU $(CFLAGS)
 
+clean: .SYMBOLIC
+	@cd $(CURDIR)\..
+	del /s /q *.obj
+	del /s /q *.lib
+	del /s /q *.err
+	del /s /q *.ld
+	del /s /q *.map
+	del /s /q *.pch
+	del /s /q *.lst
+	del /s /q *.def
+	@cd $(CURDIR)

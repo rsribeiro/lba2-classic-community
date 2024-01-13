@@ -165,11 +165,13 @@ void    InitInt15()
 
         if(Old_PM15_Sel) return         ;
 
+#ifdef USE_MSS
         if(     !AIL_vmm_lock_range(&Int15CodeStart, &Int15CodeEnd)     OR
                 !AIL_vmm_lock_range(&Int15DataStart, &Int15DataEnd)             )
         {
                 exit(1);
         }
+#endif
 
 //----- Save Old Protected Mode Vector 15 ------
         r.x.eax = 0x3515                ;//     Function 35h, for Int 15
@@ -207,8 +209,10 @@ void    ClearInt15()
         Old_PM15_Sel = 0                ;
         Old_PM15_Off = 0                ;
 
+#ifdef USE_MSS
         AIL_vmm_unlock_range(&Int15CodeStart, &Int15CodeEnd)    ;
         AIL_vmm_unlock_range(&Int15DataStart, &Int15DataEnd)    ;
+#endif
 }
 
 //──────────────────────────────────────────────────────────────────────────
