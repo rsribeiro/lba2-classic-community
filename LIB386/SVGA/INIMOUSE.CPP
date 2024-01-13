@@ -17,7 +17,9 @@
 
 //──────────────────────────────────────────────────────────────────────────
 #include	<system\exit.h>
+#ifdef USE_MSS
 #include	<ail\mss.h>
+#endif
 
 #include 	<i86.h>
 #include 	<stdlib.h>
@@ -105,11 +107,13 @@ void 	InitMouse()
 	struct SREGS sregs		;
 	union REGS inregs, outregs	;
 
+#ifdef USE_MSS
 	// Lock VMM
 	if(	!AIL_vmm_lock_range((void*)&MouseX, (void*)&MouseY)	OR
 		!AIL_vmm_lock_range((void*)&Click, (void*)((&Click)+1))	OR
 		!AIL_vmm_lock_range((void *)FP_OFF(click_handler), (void*)ShowMouse))
 		exit(1);
+#endif
 
 	segread(&sregs)	;
 
@@ -156,10 +160,12 @@ void	ClearMouse()
 
 	LastFlagMouse = FlagMouse	;
 
+#ifdef USE_MSS
 	// Unlock VMM
 	AIL_vmm_unlock_range((void*)&MouseX, (void*)&MouseY)			;
 	AIL_vmm_unlock_range((void*)&Click, (void*)((&Click)+1))			;
 	AIL_vmm_unlock_range((void *)FP_OFF(click_handler), (void*)ShowMouse)	;
+#endif
 
 	Installed	= FALSE		;
 }
