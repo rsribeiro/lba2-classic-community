@@ -274,6 +274,7 @@ extern  S32    YpOrgw ;
 extern  S32    NumObjSpeak ;
 #endif
 extern  S32    FlagSpeak ;
+extern	S32    TestSpeak() ;
 
 //-------------------- Message Chapter
 //extern S16 MessChapitreTwinsen[MAX_CHAPTER][5] ;

@@ -13,7 +13,7 @@ ENDIF;	_WIN32
 
 ;*──────────────────────────────────────────────────────────────────────────*
 IFDEF	_WIN32
-			extrn	SYSCALL	_VirtualProtect:PROC
+			extrn	STDCALL	VirtualProtect@16:PROC
 ENDIF;	_WIN32
 
 ;*──────────────────────────────────────────────────────────────────────────*
@@ -37,7 +37,7 @@ AllowPatch		PROC
 			push	edx
 			push	eax
 
-			call	_VirtualProtect		; allow EXECUTE_READWRITE on range
+			call	VirtualProtect@16		; allow EXECUTE_READWRITE on range
 
 			pop	edx
 

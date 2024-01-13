@@ -165,9 +165,9 @@ ENDIF
 
 ;-----------------------------------------------------------------------------
 IFDEF	_WIN32
-			EXTERN	SYSCALL	_GetSystemInfo:PROC
-			EXTERN	SYSCALL	_RegOpenKeyExA:PROC
-			EXTERN	SYSCALL	_RegCloseKey:PROC
+			EXTERN	STDCALL	GetSystemInfo@4:PROC
+			EXTERN	STDCALL	RegOpenKeyExA@20:PROC
+			EXTERN	STDCALL	RegCloseKey@4:PROC
 ENDIF
 
 ;-----------------------------------------------------------------------------
@@ -343,7 +343,7 @@ IFDEF	_WIN32
 
 			lea	eax, [SysInfo]
 			push	eax
-			call	_GetSystemInfo
+			call	GetSystemInfo@4
 			mov	eax, SysInfo.dwProcessorType
 			xor	edx, edx
 			mov	ecx, 100
@@ -358,12 +358,12 @@ IFDEF	_WIN32
 			push	0
 			push	ecx
 			push	80000002h			; KEY_LOCAL_MACHINE
-			call	_RegOpenKeyExA
+			call	RegOpenKeyExA@20
 			test	eax, eax
 			jnz	NoFPU
 
 			push	Key
-			call	_RegCloseKey
+			call	RegCloseKey@4
 
 			fninit
 			fld1					; 1
