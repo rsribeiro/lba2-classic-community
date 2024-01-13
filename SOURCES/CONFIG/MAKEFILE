@@ -37,7 +37,7 @@ LLFLAGS = SYSTEM dos4g OP CASEEXACT,QUIET,STACK=7000,DOSSEG
 CFLAGS =  $+$(CFLAGS)$- /DDEBUG_TOOLS /d2
 LLFLAGS = $+$(LLFLAGS)$- DEBUG ALL
 
-.SILENT
+#.SILENT
 
 .EXTENSIONS:
 .EXTENSIONS: .exe .obj .asm .c .cpp
@@ -51,17 +51,13 @@ EXE     = config
 $(EXE).exe: $(OBJETS)
 	echo    Link $(EXE).EXE
 	$(LL) $(LLFLAGS) NAME $(EXE).exe FILE *.obj
-	prntitre M "$(EXE) OK"
 
 .c.obj :
-	PRNTITRE M "$*.C"
 	$(CC) $^& $(CFLAGS)
 
 .cpp.obj :
-	PRNTITRE M "$*.CPP"
 	$(CP) $^& $(CFLAGS)
 
 .asm.obj :
-	PRNTITRE M "$*.ASM"
 	$(ASM) $(AFLAGS) $^&.ASM
 

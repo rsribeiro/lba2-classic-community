@@ -25,18 +25,13 @@ LIB     = DOS_OBJ
 LFLAGS = /c /q /b
 AFLAGS = /nologo /Cx /Zm /c /W0 /Sa /D$(DEF) /Zd /Cp
 
-.SILENT
+#.SILENT
 
 $(LIB).LIB: $(OBJETS)
 	*$(WL) $(LFLAGS) $(LIB) $?
-	PRNTITRE G "$(LIB)"
 
 .c.obj:
-	PRNTITRE M "$*.C"
 	$(CC) $* $(CFLAGS)
 
 .asm.obj:
-	PRNTITRE M "$*.ASM"
 	$(ASM) $(AFLAGS) $*.ASM
-
-

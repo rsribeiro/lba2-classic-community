@@ -52,7 +52,7 @@ LLFLAGS = $+$(LLFLAGS)$- DEBUG ALL OP STUB=STUB.EXE
 !endif
 !endif
 
-.SILENT
+#.SILENT
 
 .EXTENSIONS:
 .EXTENSIONS: .exe .obj .asm .c .cpp
@@ -77,31 +77,24 @@ EXE     = LBA0
 $(EXE).exe: $(VERSION) $(LIBS)
 	echo    Link $(EXE).EXE
 	*$(LL) $(LLFLAGS) NAME $(EXE).exe LIB $(LIBS) FILE *.obj
-	prntitre M "$(EXE) OK"
 
 .c.obj :
-	PRNTITRE M "$*.C"
 	$(CC) $^& $(CFLAGS)
 
 .cpp.obj :
-	PRNTITRE M "$*.CPP"
 	$(CP) $^& $(CFLAGS)
 
 .asm.obj :
-	PRNTITRE M "$*.ASM"
 	$(ASM) $(AFLAGS) $^&.ASM
 
 $(VERSION): version.cpp $(OBJETS)
-	PRNTITRE M "version.cpp"
 	$(CP) version $(CFLAGS)
 
 message.obj: message.cpp
-	PRNTITRE M "message.cpp"
 	del $(PCHDIR)lba.pch
 	$(CP) message $(CFLAGS)
 
 gamemenu.obj: gamemenu.cpp
-	PRNTITRE M "gamemenu.cpp"
 	del $(PCHDIR)lba.pch
 	$(CP) gamemenu $(CFLAGS)
 

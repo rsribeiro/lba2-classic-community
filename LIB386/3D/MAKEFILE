@@ -74,20 +74,16 @@ CFLAGS = $+$(CFLAGS)$- /D_BUILDING_LIB /d1 /oaxt /zq /s /w3 /mf /DLIB_LOCAL /bt=
 LFLAGS = /c /q /b
 AFLAGS = $+$(AFLAGS)$- /nologo /Cx /Zm /c /W0 /Sa /Zd /Cp
 
-.SILENT
+#.SILENT
 
 $(LIB).LIB: $(OBJETS1) $(OBJETS2)
 	*$(WL) $(LFLAGS) $(LIB) $?
-#	PRNTITRE G "$(LIB)"
 
 .cpp.obj:
-#	PRNTITRE M "$*.CPP"
 	$(CPP) $* $(CFLAGS)
 
 .c.obj:
-#	PRNTITRE M "$*.C"
 	$(CC) $* $(CFLAGS)
 
 .asm.obj:
-#	PRNTITRE M "$*.ASM"
 	$(ASM) $(AFLAGS) $*.ASM
