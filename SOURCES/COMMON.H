@@ -7,11 +7,11 @@
 #define	MyRnd(n)	(n!=0?Rnd(n):0)
 
 // protec piratage
-#if defined(ONE_GAME_DIRECTORY)&&defined(CDROM)&&!defined(DEBUG_TOOLS)&&!defined(TEST_TOOLS)
-#define	PIRACY_PROTECT()	if( !CDDrive )	TheEnd( PROGRAM_OK, MESSAGE_NO_CD ) ;
-#else
+// #if defined(ONE_GAME_DIRECTORY)&&defined(CDROM)&&!defined(DEBUG_TOOLS)&&!defined(TEST_TOOLS)
+// #define	PIRACY_PROTECT()	if( !CDDrive )	TheEnd( PROGRAM_OK, MESSAGE_NO_CD ) ;
+// #else
 #define	PIRACY_PROTECT()
-#endif
+// #endif
 
 #define	PLAY_THE_END	(ListVarGame[157]>0)
 
@@ -1373,7 +1373,7 @@ typedef	struct
 	U8	TabObj3D[4]	;//	Objects evolution ( selon IdObj3D )
 } T_INV_OBJ	;
 
-//======================== Issus de Dial 
+//======================== Issus de Dial
 #define	DIAL_DEF	(1<<0)	// Texte normal (defaut)
 #define DIAL_BIG	(1<<1)	// Texte affiche en BigMessage
 #define	DIAL_FUL	(1<<2)	// Texte affiche en BigMessage sans cadre (Full Screen)
