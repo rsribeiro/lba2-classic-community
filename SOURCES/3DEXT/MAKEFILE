@@ -1,0 +1,49 @@
+# name the compiler
+CPP = wpp386
+CC = wcc386
+WL = wlib
+ASM = ml
+
+OBJETS1 = BOXZBUF.OBJ DECORS.OBJ GLOBEXT.OBJ LINERAIN.OBJ LOADISLE.OBJ MAPTOOLS.OBJ TERRAIN.OBJ
+
+!ifeq BT NT
+CFLAGS	= /D_WIN32 /fh=NT.PCH
+AFLAGS	= /D_WIN32
+LIB     = NT_EXT
+OBJETS2 =
+!else
+CFLAGS  = /D_DOS4GW /fh=DOS.PCH
+AFLAGS	= /D_DOS4GW
+LIB     = DOS_EXT
+OBJETS2 =
+!endif
+
+!ifdef LBA2HD
+CFLAGS += /DONE_GAME_DIRECTORY /DCDROM /DLBA_GAME
+#/DDEBUG_TOOLS /DTEST_TOOLS
+!else
+!ifdef LBA2DEMO
+CFLAGS += /DDEMO /DONE_GAME_DIRECTORY
+#/DDEBUG_TOOLS
+!else
+CFLAGS  += /DDEBUG_TOOLS /DCDROM /DLBA_GAME
+!endif
+!endif
+
+CFLAGS += /6s /d3 /oneatxz /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp8 /v
+LFLAGS = /c /b /l
+AFLAGS += /DSTACK_CALL /nologo /Cx /c /W0 /Sa /Zd /Cp /omf
+
+#.SILENT
+
+$(LIB).LIB: $(OBJETS1) $(OBJETS2)
+	*$(WL) $(LFLAGS) $(LIB) $?
+
+.cpp.obj:
+	$(CPP) $* $(CFLAGS)
+
+.c.obj:
+	$(CC) $* $(CFLAGS)
+
+.asm.obj:
+	$(ASM) $(AFLAGS) $*.ASM
