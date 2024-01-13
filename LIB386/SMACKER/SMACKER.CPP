@@ -1,18 +1,27 @@
 #include	<system\adeline.h>
 #include	<system\logprint.h>
 
+#ifdef USE_MSS
 #ifdef	_WIN32
 #include	<ail\mssw.h>
 #else
 #include	<ail\mss.h>
+#endif
+#else
+#include	<ail\nullsound.h>
 #endif
 
 #include	<ail\common.h>
 
 #include	<system.h>
 
+#ifdef USE_SMACKER
 #include	<smacker\smack.h>
 #include	<smacker\smacker.h>
+#else
+#define RCFUNC
+#define RADLINK
+#endif
 
 //████████████████████████████████████████████████████████████████████████████
 
@@ -51,6 +60,7 @@ extern HDIGDRIVER	DigDriver;	// Handle to digital audio driver
 
 RCFUNC void * RADLINK radmalloc(U32 size)
 {
+#ifdef USE_SMACKER
 	MALLOC_BLOCK	*ptr		;
 	MALLOC_BLOCK	*next		;
 	S32		i, found	;
@@ -104,12 +114,16 @@ end:
 	ptr->Flags &= ~FLAG_LAST	;
 
 	return	(void *)(ptr+1)		;
+#else
+	return NULL;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 RCFUNC void RADLINK radfree(void *ptr)
 {
+#ifdef USE_SMACKER
 	S32		i, found		;
 	MALLOC_BLOCK	*prev, *block, *next	;
 
@@ -168,24 +182,28 @@ end:
 		block->Size += next->Size + sizeof(MALLOC_BLOCK);
 		block->Flags |= next->Flags;
 	}
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	SmackRegisterMemory(void *ptr, U32 size)
 {
+#ifdef USE_SMACKER
 	if(NbBlock>=MAX_BLOCKS)	return	;
 
 	Block[NbBlock].Ptr	= (MALLOC_BLOCK*)ptr	;
 	Block[NbBlock].Size	= size&~15		;
 
 	NbBlock++	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	SmackResetMemory()
 {
+#ifdef USE_SMACKER
 	S32	i ;
 
 	for(i=0; i<NbBlock; i++)
@@ -193,12 +211,14 @@ void	SmackResetMemory()
 		Block[i].Ptr->Size = Block[i].Size-sizeof(MALLOC_BLOCK)	;
 		Block[i].Ptr->Flags= FLAG_FREE|FLAG_LAST		;
 	}
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	InitSmacker()
 {
+#if defined(USE_SMACKER) && defined(USE_MSS)
 	SmackSoundUseMSS(DigDriver);
 
 	if(DigDriver)
@@ -209,6 +229,9 @@ void	InitSmacker()
 	{
 		LogPuts("No Digital Sound Driver. Smacker will not playback soundtracks.");
 	}
+#else
+	LogPuts("No Digital Sound Driver. Smacker will not playback soundtracks.");
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████

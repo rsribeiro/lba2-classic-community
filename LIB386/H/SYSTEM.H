@@ -72,10 +72,14 @@
 
 #ifdef	_WIN32
 #include	<SYSTEM\WINSYS.H>
+#ifdef USE_MSS
 #include	<AIL\MSSW.H>
+#endif
 #else// _WIN32
 #include	<SYSTEM\DOSSYS.H>
+#ifdef USE_MSS
 #include	<AIL\MSS.H>
+#endif
 #endif//_WIN32
 
 //──────────────────────────────────────────────────────────────────────────
