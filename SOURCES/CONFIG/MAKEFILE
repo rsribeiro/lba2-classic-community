@@ -1,41 +1,17 @@
-# name the compilers
+CP = wpp386
+CC = wcc386
+WL = wlib
+LL = wlink
+ASM = ml
+PCHDIR =
 
-!ifdef %RAMSYS
+AFLAGS  = /Cx /Zi /c /WX /Sa /nologo
+CFLAGS  = /oneatxz /zp8 /6s /s /wx /bt=DOS /fh=$(PCHDIR)lba.pch /DDOS4GW /DDEBUG_TOOLS /d3
+LLFLAGS = SYSTEM dos4g OP CASEEXACT,STACK=7000,DOSSEG DEBUG DWARF ALL
 
-WATCOM	= e:\compil\watcom
-ASM	= e:\compil\masm611\bin\ml
-PCHDIR	= e:\
-
-!else
-
-WATCOM	= $(%WATCOM)
-!ifdef %MASM
-ASM	= $(%MASM)\bin\ml
-!else
-ASM	= f:\compil\masm611\bin\ml
-!endif
-PCHDIR	= f:
-
-!endif
-
-!ifdef %NT
-CP = $(WATCOM)\binnt\wpp386
-CC = $(WATCOM)\binnt\wcc386
-WL = $(WATCOM)\binnt\wlib
-LL = $(WATCOM)\binnt\wlink
-!else
-CP = $(WATCOM)\binw\wpp386
-CC = $(WATCOM)\binw\wcc386
-WL = $(WATCOM)\binw\wlib
-LL = $(WATCOM)\binw\wlink
-!endif
-
-AFLAGS  = /Cx /Zm /Zi /c /W0 /Sa /nologo
-CFLAGS  = /oneatxz /zp2 /5r /zq /s /w3 /bt=DOS /fh=$(PCHDIR)lba.pch /DDOS4GW
-LLFLAGS = SYSTEM dos4g OP CASEEXACT,QUIET,STACK=7000,DOSSEG
-
-CFLAGS =  $+$(CFLAGS)$- /DDEBUG_TOOLS /d2
-LLFLAGS = $+$(LLFLAGS)$- DEBUG ALL
+LIB386_PATH = ..\..\LIB386
+LIBS  = $(LIB386_PATH)\SYSTEM\DOS_SYSS.LIB
+LIBS += $(LIB386_PATH)\SVGA\DOS_SVGS.LIB
 
 #.SILENT
 
@@ -48,9 +24,16 @@ OBJETS  = main.obj input.obj config.obj
 
 EXE     = config
 
-$(EXE).exe: $(OBJETS)
-	echo    Link $(EXE).EXE
-	$(LL) $(LLFLAGS) NAME $(EXE).exe FILE *.obj
+# This is the GNU Make equivalent of CURDIR :=
+CURDIR   = $+ $(%cdrive):$(%cwd) $-
+
+$(EXE).exe: $(LIBS) $(OBJETS)
+	$(LL) NAME $@ $(LLFLAGS) Library { $LIBS } FILE { $OBJETS }
+
+$(LIBS):
+	cd $^:
+	$(MAKE) "BT=DOS"
+	@cd $(CURDIR)
 
 .c.obj :
 	$(CC) $^& $(CFLAGS)

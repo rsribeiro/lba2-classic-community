@@ -1,11 +1,12 @@
 #include	<dos.h>
 #include	<direct.h>
 #include	<ctype.h>
+#include	<string.h>
 
 #include	<system.h>
 #include	<svga.h>
 #include	<3d.h>
-
+#include	<ail/timer.h>
 #include	<fileio.h>
 
 #include	"AddKeys.h"
