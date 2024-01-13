@@ -1,19 +1,8 @@
 # name the compiler
-!ifdef %NT
-CPP= $(%WATCOM)\binnt\wpp386
-CC = $(%WATCOM)\binnt\wcc386
-WL = $(%WATCOM)\binnt\wlib
-!else
-CPP= $(%WATCOM)\binw\wpp386
-CC = $(%WATCOM)\binw\wcc386
-WL = $(%WATCOM)\binw\wlib
-!endif
-
-!ifdef %MASM
-ASM= $(%MASM)\bin\ml
-!else
-ASM= f:\compil\masm611\bin\ml
-!endif
+CPP = wpp386
+CC = wcc386
+WL = wlib
+ASM = ml
 
 OBJETS1	=	POLY.OBJ	POLYCLIP.OBJ	POLYDISC.OBJ	POLYFLAT.OBJ	&
 		POLYGOUR.OBJ	POLYGTEX.OBJ	POLYLINE.OBJ	POLYTEXT.OBJ	&
@@ -22,28 +11,20 @@ OBJETS1	=	POLY.OBJ	POLYCLIP.OBJ	POLYDISC.OBJ	POLYFLAT.OBJ	&
 		TESTVUEM.OBJ
 
 !ifeq BT NT
-CFLAGS	= /D_WIN32 /hc /fh=NT
+CFLAGS	= /D_WIN32 /fh=NT.PCH
 AFLAGS	= /D_WIN32
 LIB     = NT_POLY
 OBJETS2 =
 !else
-CFLAGS	= /D_DOS4GW /hw /fh=DOS
+CFLAGS	= /D_DOS4GW /fh=DOS.PCH
 AFLAGS	= /D_DOS4GW
 LIB     = DOS_POLY
 OBJETS2 =
 !endif
 
-!ifeq CALL REG
-CFLAGS	= $+$(CFLAGS)$-R.PCH /4r
-AFLAGS = $+$(AFLAGS)$- /DREG_CALL
-!else
-CFLAGS	= $+$(CFLAGS)$-S.PCH /4s
-AFLAGS = $+$(AFLAGS)$- /DSTACK_CALL
-!endif
-
-CFLAGS = $+$(CFLAGS)$- /D_BUILDING_LIB /d1 /oaxt /zq /s /w3 /mf /DLIB_LOCAL /bt=$(BT)
-LFLAGS = /c /q /b
-AFLAGS = $+$(AFLAGS)$- /nologo /Cx /Zm /c /W0 /Sa /Zd /Cp
+CFLAGS += /6s /d3 /oneatxz /s /WX /mf /hd /DLIB_LOCAL /bt=$(BT) /zp8 /v
+LFLAGS  = /c /b /l
+AFLAGS += /DSTACK_CALL /nologo /Cx /Zm /Zi /c /W0 /Sa /Zd /Cp /omf
 
 #.SILENT
 
