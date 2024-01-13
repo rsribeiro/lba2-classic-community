@@ -1,0 +1,12 @@
+
+*.LIB
+*.OBJ
+*.ERR
+*.PCH
+*.DEF
+*.LST
+*.MAP
+SOURCES/BUILD/*
+!SOURCES/BUILD/.gitkeep
+tags
+.vscode
