@@ -1,9 +1,13 @@
 #include	<system\adeline.h>
 
+#ifdef USE_MSS
 #ifdef	_WIN32
 #include	<ail\mssw.h>
 #else
 #include	<ail\mss.h>
+#endif
+#else
+#include	<ail\nullsound.h>
 #endif
 
 #include	<ail\common.h>
@@ -26,6 +30,7 @@ static	S32		SizeLib		= 0		;
 
 void	InitSampleSynthesizer( void *wavelib, S32 sizelib, S32 voices )
 {
+#ifdef USE_MSS
 	if((!Midi_Driver_Enabled)||(!Sample_Driver_Enabled))	return	;
 
 	if(WaveLib)
@@ -41,12 +46,14 @@ void	InitSampleSynthesizer( void *wavelib, S32 sizelib, S32 voices )
 	WaveSynthesizer = AIL_create_wave_synthesizer(DigDriver, MdiDriver, wavelib, voices );
 	WaveLib		= wavelib	;
 	SizeLib		= sizelib	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	ClearSampleSynthesizer()
 {
+#ifdef USE_MSS
 	if((!Midi_Driver_Enabled)||(!Sample_Driver_Enabled))	return	;
 
 	if( !WaveLib )	return	;
@@ -56,6 +63,7 @@ void	ClearSampleSynthesizer()
 
 	WaveLib	= NULL	;
 	SizeLib	= 0	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████

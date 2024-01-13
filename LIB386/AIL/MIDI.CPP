@@ -9,11 +9,15 @@
 #include 	<stdlib.h>
 #include 	<string.h>
 
+#ifdef USE_MSS
 #ifdef	_WIN32
 #include	<system\winsys.h>
 #include	<ail\mssw.h>
 #else
 #include	<ail\mss.h>
+#endif
+#else
+#include	<ail\nullsound.h>
 #endif
 
 //████████████████████████████████████████████████████████████████████████████
@@ -93,6 +97,7 @@ VOID_FUNC	SpecialInitMidiDriver	;
 
 S32	InitMidiDriver( char *driver_name )
 {
+#ifdef USE_MSS
 #ifndef	_WIN32
 	S32	type ;
 #endif
@@ -221,6 +226,10 @@ S32	InitMidiDriver( char *driver_name )
 #endif
 
 	return TRUE		;
+#else
+	LogPuts( "No Midi Driver specified. Midi Disabled." );
+	return TRUE		;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
@@ -250,6 +259,7 @@ static void pascal
 #endif
 TriggerCallBack(HSEQUENCE handle, S32 channel, S32 value)
 {
+#ifdef USE_MSS
 	// Dummy code to avoid warnings (doesn't actually generate code)
 	handle	= handle	;
 	channel = channel	;
@@ -286,6 +296,7 @@ TriggerCallBack(HSEQUENCE handle, S32 channel, S32 value)
 
 	// branch to right index
 	AIL_branch_index(Midi_Handle, BlockPlaying)	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
@@ -297,6 +308,7 @@ static void pascal
 #endif
 SequenceCallBack(HSEQUENCE handle)
 {
+#ifdef USE_MSS
 	// Dummy code to avoid warnings (doesn't actually generate code)
 	handle	= handle	;
 
@@ -314,12 +326,14 @@ SequenceCallBack(HSEQUENCE handle)
 
 	// process next block in sequence
 	TriggerCallBack(0, 0, BlockPlaying);
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	ResetMidi()
 {
+#ifdef USE_MSS
 	if( !Midi_Driver_Enabled )		return	;
 
 	// If already doing reset then exit
@@ -343,12 +357,14 @@ void	ResetMidi()
 	WaitReset = TRUE				;
 
 	AIL_start_sequence(Midi_Handle)			;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 U32	PrepareMidi( void *ptrxmi, S32 seq_num, S32 volume)
 {
+#ifdef USE_MSS
 	if( !Midi_Driver_Enabled )	return FALSE ;
 
 	// Reset controllers
@@ -380,6 +396,9 @@ U32	PrepareMidi( void *ptrxmi, S32 seq_num, S32 volume)
 	AIL_start_sequence(Midi_Handle)	;
 
 	return TRUE			;
+#else
+	return FALSE	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
@@ -392,13 +411,16 @@ void	ClearMidi()
 	BlockPlaying	= -1		;
 	MidiPaused	= 0		;
 
+#ifdef USE_MSS
 	AIL_end_sequence(Midi_Handle)	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	PlayBlockMidi(S32 block_num)
 {
+#ifdef USE_MSS
 	if( !Midi_Driver_Enabled )	return 	;
 
 	// Stop Midi
@@ -413,12 +435,14 @@ void	PlayBlockMidi(S32 block_num)
 
 	// Go
 	AIL_resume_sequence(Midi_Handle)	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	ChainBlockMidi(S32 block_num)
 {
+#ifdef USE_MSS
 	S32	n, m	;
 
 	if( !Midi_Driver_Enabled )	return 	;
@@ -448,16 +472,19 @@ void	ChainBlockMidi(S32 block_num)
 	{
 		PlayBlockMidi(block_num)	;
 	}
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	ChangeVolumeMidi(LONG volume, S32 delay)
 {
+#ifdef USE_MSS
 	if( !Midi_Driver_Enabled )	return	;
 
 	// Volume
 	AIL_set_sequence_volume( Midi_Handle, volume, delay)	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
@@ -483,17 +510,20 @@ void	StopMidi( )
 	BlockPlaying	= -1		;
 	MidiPaused	= 0		;
 
+#ifdef USE_MSS
 	// Wait for Reset to complete
 	while(WaitReset)		;
 
 	// Stop PlayBack
 	AIL_stop_sequence(Midi_Handle)	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	PauseMidi( )
 {
+#ifdef USE_MSS
 	if( !Midi_Driver_Enabled )	return	;
 
 	if(!MidiPaused)
@@ -510,12 +540,14 @@ void	PauseMidi( )
 		AIL_stop_sequence(Midi_Handle)	;
 	}
 	MidiPaused++	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	ResumeMidi( )
 {
+#ifdef USE_MSS
 	if( !Midi_Driver_Enabled )	return	;
 
 	if(MidiPaused)
@@ -528,6 +560,7 @@ void	ResumeMidi( )
 			AIL_resume_sequence(Midi_Handle);
 		}
 	}
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████

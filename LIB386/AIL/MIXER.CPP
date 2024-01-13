@@ -5,13 +5,16 @@
 
 //████████████████████████████████████████████████████████████████████████████
 
+#ifdef USE_MSS
 static MIXERCONTROLDETAILS VolumeDetails;
 static MIXERCONTROLDETAILS_UNSIGNED VolumeValue[2];
+#endif
 
 //████████████████████████████████████████████████████████████████████████████
 
 S32	GetMixerVolDevice(VOLUMECONTROL *volcontrol, S32 type)
 {
+#ifdef USE_MSS
 	S32 			voldeviceid;
 	S32			i ;
 	MIXERLINE 		lineinfo;
@@ -68,7 +71,7 @@ error:			mixerClose((HMIXER)voldeviceid);
 	}
 
 	volcontrol->DeviceID = -1	;
-
+#endif
 	return FALSE	;
 }
 
@@ -76,6 +79,7 @@ error:			mixerClose((HMIXER)voldeviceid);
 
 S32	GetMixerVolume(VOLUMECONTROL *volcontrol)
 {
+#ifdef USE_MSS
 	if(volcontrol->DeviceID == -1)
 	{
 		return 0 ;
@@ -87,12 +91,16 @@ S32	GetMixerVolume(VOLUMECONTROL *volcontrol)
 	mixerGetControlDetails((HMIXEROBJ)volcontrol->DeviceID,&VolumeDetails,MIXER_SETCONTROLDETAILSF_VALUE);
 
 	return((VolumeValue[0].dwValue&0xffff)>>9);
+#else
+	return 0 ;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	SetMixerVolume(VOLUMECONTROL *volcontrol, S32 volume)
 {
+#ifdef USE_MSS
 	if(volcontrol->DeviceID == -1)
 	{
 		return	;
@@ -115,6 +123,7 @@ void	SetMixerVolume(VOLUMECONTROL *volcontrol, S32 volume)
 	VolumeValue[1].dwValue=volume ;
 
 	mixerSetControlDetails((HMIXEROBJ)volcontrol->DeviceID,&VolumeDetails,MIXER_SETCONTROLDETAILSF_VALUE);
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████

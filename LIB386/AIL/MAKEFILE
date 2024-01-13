@@ -1,0 +1,38 @@
+# name the compiler
+CPP = wpp386
+CC = wcc386
+WL = wlib
+ASM = ml
+
+OBJETS1 = CD.OBJ COMMON.OBJ MIDDIG.OBJ MIDI.OBJ MIXER.OBJ SAMPLE.OBJ STREAM.OBJ TIMER.OBJ
+
+
+!ifeq BT NT
+CFLAGS	= /D_WIN32 /fh=NT.PCH
+AFLAGS	= /D_WIN32
+LIB     = NT_AILS
+OBJETS2 =
+!else
+CFLAGS	= /D_DOS4GW /fh=DOS.PCH
+AFLAGS	= /D_DOS4GW
+LIB     = DOS_AILS
+OBJETS2 =
+!endif
+
+CFLAGS += /6s /d3 /oneatxz /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp8 /v
+LFLAGS  = /c /b /l
+AFLAGS += /DSTACK_CALL /nologo /Cx /c /WX /Sa /Zd /Cp /omf
+
+#.SILENT
+
+$(LIB).LIB: $(OBJETS1) $(OBJETS2)
+	*$(WL) $(LFLAGS) $(LIB) $?
+
+.cpp.obj:
+	$(CPP) $* $(CFLAGS)
+
+.c.obj:
+	$(CC) $* $(CFLAGS)
+
+.asm.obj:
+	$(ASM) $(AFLAGS) $*.ASM

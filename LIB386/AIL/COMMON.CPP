@@ -5,10 +5,14 @@
 
 #include	<stdlib.h>
 
+#ifdef USE_MSS
 #ifdef	_WIN32
 #include	<ail\mssw.h>
 #else
 #include	<ail\mss.h>
+#endif
+#else
+#include	<ail\nullsound.h>
 #endif
 
 //████████████████████████████████████████████████████████████████████████████

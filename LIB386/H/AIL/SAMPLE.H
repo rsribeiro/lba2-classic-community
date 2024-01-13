@@ -2,6 +2,10 @@
 #ifndef	LIB_AIL_SAMPLE
 #define	LIB_AIL_SAMPLE
 
+#ifndef USE_MSS
+#include <ail/nullsound.h>
+#endif
+
 //--------------------------------------------------------------------------
 #ifdef __cplusplus
 extern "C" {

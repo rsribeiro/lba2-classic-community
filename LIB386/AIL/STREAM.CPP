@@ -2,10 +2,18 @@
 
 #ifdef	_WIN32
 #include	<system\winsys.h>
+#ifdef USE_MSS
 #include	<ail\mssw.h>
+#endif
 #else
 #include	<system\dossys.h>
+#ifdef USE_MSS
 #include	<ail\mss.h>
+#endif
+#endif
+
+#ifndef USE_MSS
+#include    <ail\nullsound.h>
 #endif
 
 #include	<ail\common.h>
@@ -44,6 +52,7 @@ static	VOID_FUNC	ManageStream		;
 
 static void	ManageStream()
 {
+#ifdef USE_MSS
 	if( Sample_Driver_Enabled && Stream )
 	{
 		AIL_service_stream(Stream, 0)	;
@@ -53,12 +62,14 @@ static void	ManageStream()
 	{
 		StreamManageProc()	;
 	}
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 static void PlayThisStream(char *name, S32 pos)
 {
+#ifdef USE_MSS
 	if( !Sample_Driver_Enabled )	return	;
 
 	StopStream()	;
@@ -80,6 +91,7 @@ static void PlayThisStream(char *name, S32 pos)
 	AIL_start_stream(Stream)		;
 
 	ManageStream()				;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
@@ -107,6 +119,7 @@ void	PlayStream(char *name)
 
 void	ChangeVolumeStream(S32 volume)
 {
+#ifdef USE_MSS
 	if(volume>127)
 	{
 		volume = 127	;
@@ -125,7 +138,7 @@ void	ChangeVolumeStream(S32 volume)
 			UseWaveMixer?StreamVolume:
 #endif//_WIN32
 			Scale(StreamVolume, LibWaveMasterVolume, 7));
-
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
@@ -139,18 +152,21 @@ S32	GetVolumeStream()
 
 void	StopStream()
 {
+#ifdef USE_MSS
 	if( !Sample_Driver_Enabled || !Stream )	return ;
 
 	AIL_close_stream(Stream)	;
 
 	Stream = NULL		;
 	StreamPathName[0] = 0	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	PauseStream()
 {
+#ifdef USE_MSS
 	if(!IsStreamPlaying())		return	;
 
 	AIL_pause_stream(Stream, TRUE)		;
@@ -161,6 +177,7 @@ void	PauseStream()
 	strcpy(PausedPathName, StreamPathName)	;
 
 	StopStream()				;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
@@ -178,6 +195,7 @@ void	ResumeStream()
 
 S32	IsStreamPlaying()
 {
+#ifdef USE_MSS
 	S32	playing	;
 
 	if( !Sample_Driver_Enabled || !Stream )	return FALSE ;
@@ -189,6 +207,9 @@ S32	IsStreamPlaying()
 	if(!playing)	StopStream()	;
 
 	return	playing	;
+#else
+	return	FALSE	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████

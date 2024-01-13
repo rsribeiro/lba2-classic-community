@@ -5,11 +5,13 @@
 
 #include	<ail\timer.h>
 
+#ifdef USE_MSS
 #ifdef	_WIN32
 #include	<ail\mssw.h>
 #else//	_WIN32
 #include	<ail\mss.h>
 #endif//_WIN32
+#endif
 
 //████████████████████████████████████████████████████████████████████████████
 VOID_FUNC	ClearAIL;
@@ -17,15 +19,19 @@ VOID_FUNC	ClearAIL;
 //████████████████████████████████████████████████████████████████████████████
 void	InitAIL()
 {
+#ifdef USE_MSS
 	AIL_startup()	;
 
 	RegisterInitClear( InitAIL, ClearAIL ) ;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 void	ClearAIL()
 {
+#ifdef USE_MSS
 	AIL_shutdown()	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
@@ -34,6 +40,7 @@ void	ClearAIL()
 //████████████████████████████████████████████████████████████████████████████
 S32	InitTimerAIL()
 {
+#ifdef USE_MSS
 	HTIMER  HandleTimer ;
 
 	LockVMMTimer();
@@ -49,6 +56,9 @@ S32	InitTimerAIL()
 	RegisterInitClear( (VOID_FUNC *)InitTimerAIL, NULL ) ;
 
 	return TRUE;
+#else
+	return FALSE ;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
