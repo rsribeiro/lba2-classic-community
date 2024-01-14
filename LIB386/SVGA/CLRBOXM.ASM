@@ -1,9 +1,10 @@
 ;----------------------------------------------------------------------------
 			.386
+			.MMX
 
 			.MODEL	FLAT, SYSCALL
 
-			include	iammx.inc
+			;include	iammx.inc
 
 ;----------------------------------------------------------------------------
 			.DATA
@@ -50,7 +51,7 @@ ClearBoxM		PROC
 			sub 	ebx, esi		; deltaY
 			mov	ecx, eax
 
-			movq	mm0, [ClearColor]
+			movd	mm0, [ClearColor]
 
 			test	eax, 8
 			jnz	odd

@@ -642,20 +642,20 @@ mode_found:
 			mov	eax, [esi+2]		; X/Y Resolution
 			mov	ebx, [Data_256]		; Rest of data
 			mov	ecx, [Data_256+4]
-			mov	dword ptr[edi+ModeXResolution], eax; fill buffer
-			mov	dword ptr[edi+ModeXResolution+4], ebx
-			mov	dword ptr[edi+ModeXResolution+8], ecx
+			mov	dword ptr[edi+Struc_ModeInfoBlock.ModeXResolution], eax; fill buffer
+			mov	dword ptr[edi+Struc_ModeInfoBlock.ModeXResolution+4], ebx
+			mov	dword ptr[edi+Struc_ModeInfoBlock.ModeXResolution+8], ecx
 
 			cmp	[R_ECX], 13h
 			jne	exit_mode_scan
 
-			mov	[edi].ModeAttributes, 10110001b
-			mov	[edi].ModeNumberOfPlanes, 1
-			mov	[edi].ModeNumberOfBanks, 1
-			mov	[edi].ModeMemoryModel, 04h; Packed pixel
+			mov	[edi].Struc_ModeInfoBlock.ModeAttributes, 10110001b
+			mov	[edi].Struc_ModeInfoBlock.ModeNumberOfPlanes, 1
+			mov	[edi].Struc_ModeInfoBlock.ModeNumberOfBanks, 1
+			mov	[edi].Struc_ModeInfoBlock.ModeMemoryModel, 04h; Packed pixel
 
-			mov	[edi].ModePhysBasePtr, 0A0000h
-			mov	[edi].ModeBytesPerScanLine, ax
+			mov	[edi].Struc_ModeInfoBlock.ModePhysBasePtr, 0A0000h
+			mov	[edi].Struc_ModeInfoBlock.ModeBytesPerScanLine, ax
 
 			jmp	Ok_Get
 exit_mode_scan:
@@ -670,14 +670,14 @@ exit_mode_scan:
 
 			mov	edi, [PtrModeInfoBlock]
 
-			movzx	ebp, [edi].ModeAttributes
+			movzx	ebp, [edi].Struc_ModeInfoBlock.ModeAttributes
 			xor	ebp, (1 shl 5)+(1 shl 6); XOR to get all the bits in positive logic
 							; Bit 7: 1=>Linear frame buffer available
 							; Bit 6: 1=>Windowed memory mode available
 							; Bit 5: 1=>VGA compatible
 							; Bit 4: 1=>Graphic mode
 							; Bit 0: 1=>Mode supported by hardware
-			mov	[edi].ModeAttributes, bp
+			mov	[edi].Struc_ModeInfoBlock.ModeAttributes, bp
 
 			test	ebp, 1
 			jz	Unsupported_Mode	; if not supported exit
@@ -685,16 +685,16 @@ exit_mode_scan:
 			test	ebp, 1 shl 4
 			jz	Unsupported_Mode	; if not graphic mode then exit
 
-			cmp	[edi].ModeNumberOfPlanes, 1
+			cmp	[edi].Struc_ModeInfoBlock.ModeNumberOfPlanes, 1
 			jne	Unsupported_Mode
 
-			cmp	[edi].ModeNumberOfBanks, 1
+			cmp	[edi].Struc_ModeInfoBlock.ModeNumberOfBanks, 1
 			jne	Unsupported_Mode
 
-			cmp	[edi].ModeMemoryModel, 06h; Direct color?
+			cmp	[edi].Struc_ModeInfoBlock.ModeMemoryModel, 06h; Direct color?
 			je	Ok_Get
 Test_Packed:
-			cmp	[edi].ModeMemoryModel, 04h; Packed pixel
+			cmp	[edi].Struc_ModeInfoBlock.ModeMemoryModel, 04h; Packed pixel
 			jne	Unsupported_Mode
 Ok_Get:
 			popad
@@ -1077,7 +1077,7 @@ InitVESA		PROC
 
 			and	eax, 0FFFFh
 			shl	eax, 4
-			mov	dword ptr [eax].VbeSignature, "2EBV"; 'VBE2' signature
+			mov	dword ptr [eax].Struc_VbeInfoBlock.VbeSignature, "2EBV"; 'VBE2' signature
 
 			mov	[PtrVbeInfoBlock], eax
 
@@ -1101,50 +1101,50 @@ InitVESA		PROC
 
 			mov	esi, [PtrVbeInfoBlock]
 
-			cmp	dword ptr[esi].VbeSignature, "ASEV"; check 'VESA' signature
+			cmp	dword ptr[esi].Struc_VbeInfoBlock.VbeSignature, "ASEV"; check 'VESA' signature
 			jne	Errorfree_
 
-			mov	eax, [esi].VbeOemStringPtr	; Conversion d'un ptr Real vers un Ptr flat
+			mov	eax, [esi].Struc_VbeInfoBlock.VbeOemStringPtr	; Conversion d'un ptr Real vers un Ptr flat
 			mov	ebx, eax
 			shr	eax, 12
 			and	eax, not 15
 			and	ebx, 0FFFFh
 			add	eax, ebx
-			mov	[esi].VbeOemStringPtr, eax
+			mov	[esi].Struc_VbeInfoBlock.VbeOemStringPtr, eax
 
 
-			mov	eax, [esi].VbeVideoModePtr	; Conversion d'un ptr Real vers un Ptr flat
+			mov	eax, [esi].Struc_VbeInfoBlock.VbeVideoModePtr	; Conversion d'un ptr Real vers un Ptr flat
 			mov	ebx, eax
 			shr	eax, 12
 			and	eax, not 15
 			and	ebx, 0FFFFh
 			add	eax, ebx
-			mov	[esi].VbeVideoModePtr, eax
+			mov	[esi].Struc_VbeInfoBlock.VbeVideoModePtr, eax
 
 
-			mov	eax, [esi].VbeOemVendorNamePtr	; Conversion d'un ptr Real vers un Ptr flat
+			mov	eax, [esi].Struc_VbeInfoBlock.VbeOemVendorNamePtr	; Conversion d'un ptr Real vers un Ptr flat
 			mov	ebx, eax
 			shr	eax, 12
 			and	eax, not 15
 			and	ebx, 0FFFFh
 			add	eax, ebx
-			mov	[esi].VbeOemVendorNamePtr, eax
+			mov	[esi].Struc_VbeInfoBlock.VbeOemVendorNamePtr, eax
 
-			mov	eax, [esi].VbeOemProductNamePtr	; Conversion d'un ptr Real vers un Ptr flat
+			mov	eax, [esi].Struc_VbeInfoBlock.VbeOemProductNamePtr	; Conversion d'un ptr Real vers un Ptr flat
 			mov	ebx, eax
 			shr	eax, 12
 			and	eax, not 15
 			and	ebx, 0FFFFh
 			add	eax, ebx
-			mov	[esi].VbeOemProductNamePtr, eax
+			mov	[esi].Struc_VbeInfoBlock.VbeOemProductNamePtr, eax
 
-			mov	eax, [esi].VbeOemProductRevPtr	; Conversion d'un ptr Real vers un Ptr flat
+			mov	eax, [esi].Struc_VbeInfoBlock.VbeOemProductRevPtr	; Conversion d'un ptr Real vers un Ptr flat
 			mov	ebx, eax
 			shr	eax, 12
 			and	eax, not 15
 			and	ebx, 0FFFFh
 			add	eax, ebx
-			mov	[esi].VbeOemProductRevPtr, eax
+			mov	[esi].Struc_VbeInfoBlock.VbeOemProductRevPtr, eax
 Fin_Ok:
 			mov	[ModeDesiredX], 640
 			mov	[ModeDesiredY], 480
@@ -1229,7 +1229,7 @@ ScanVESAModes		PROC
 			jz	exit
 Can_Start:
 			mov	esi, [PtrVbeInfoBlock]
-			mov	esi, [esi].VbeVideoModePtr
+			mov	esi, [esi].Struc_VbeInfoBlock.VbeVideoModePtr
 
 			mov	eax, 13h
 			jmp	EnterLoop
@@ -1251,20 +1251,20 @@ EnterLoop:
 			xor	ebx, ebx
 
 			xor	ecx, ecx
-			mov	dx, [edi].ModeAttributes
+			mov	dx, [edi].Struc_ModeInfoBlock.ModeAttributes
 
-			mov	ax, [edi].ModeXResolution
-			mov	bx, [edi].ModeYResolution
+			mov	ax, [edi].Struc_ModeInfoBlock.ModeXResolution
+			mov	bx, [edi].Struc_ModeInfoBlock.ModeYResolution
 
 			shr	edx, 6
-			mov	cl, [edi].ModeBitsPerPixel
+			mov	cl, [edi].Struc_ModeInfoBlock.ModeBitsPerPixel
 
-			movzx	edi, [edi].ModeNumberOfImagePages
+			movzx	edi, [edi].Struc_ModeInfoBlock.ModeNumberOfImagePages
 
 			and	edx, 3
 			inc	edi
 
-			call	[esp+4]
+			call dword ptr	[esp+4]
 
 			jmp	Next_Mode
 exit:
@@ -1313,7 +1313,7 @@ ok_memory:
 			jz	Check_End
 Can_Start:
 			mov	esi, [PtrVbeInfoBlock]
-			mov	esi, [esi].VbeVideoModePtr
+			mov	esi, [esi].Struc_VbeInfoBlock.VbeVideoModePtr
 
 			mov	eax, 13h
 			jmp	EnterLoop
@@ -1333,11 +1333,11 @@ EnterLoop:
 
 			mov	edi, [PtrModeInfoBlock]
 
-			cmp	[edi].ModeBitsPerPixel, cl
+			cmp	[edi].Struc_ModeInfoBlock.ModeBitsPerPixel, cl
 			jne	Next_Mode
 
-			movzx	eax, [edi].ModeXResolution
-			movzx	ebx, [edi].ModeYResolution
+			movzx	eax, [edi].Struc_ModeInfoBlock.ModeXResolution
+			movzx	ebx, [edi].Struc_ModeInfoBlock.ModeYResolution
 
 			cmp	eax, [ModeDesiredX]
 			jb	Next_Mode
@@ -1345,7 +1345,7 @@ EnterLoop:
 			cmp	ebx, [ModeDesiredY]
 			jb	Next_Mode
 
-			movzx	edi, [edi].ModeAttributes
+			movzx	edi, [edi].Struc_ModeInfoBlock.ModeAttributes
 			shr	edi, 6
 			and	edi, [ModeDesiredMemory]
 			jz	Next_Mode
@@ -1432,11 +1432,11 @@ Retry:
 			jz	Init_Error
 
 			mov	edi, [PtrModeInfoBlock]	; retrieve infos
-			movzx	eax, [edi].ModeBytesPerScanLine
-			movzx	ebx, [edi].ModeXResolution
-			movzx	ecx, [edi].ModeYResolution
-			mov	edx, [edi].ModePhysBasePtr
-			movzx	edi, [edi].ModeNumberOfImagePages
+			movzx	eax, [edi].Struc_ModeInfoBlock.ModeBytesPerScanLine
+			movzx	ebx, [edi].Struc_ModeInfoBlock.ModeXResolution
+			movzx	ecx, [edi].Struc_ModeInfoBlock.ModeYResolution
+			mov	edx, [edi].Struc_ModeInfoBlock.ModePhysBasePtr
+			movzx	edi, [edi].Struc_ModeInfoBlock.ModeNumberOfImagePages
 			mov	[BytesScanLine], eax
 			inc	edi
 			mov	[ModeResX], ebx
@@ -1448,7 +1448,7 @@ Retry:
 			mov	[SetPaletteVESA], Offset SetPaletteVESA1
 
 			mov	edi, [PtrVbeInfoBlock]
-			cmp	[edi].VbeVersion, 0200h
+			cmp	[edi].Struc_VbeInfoBlock.VbeVersion, 0200h
 			jb	No_Prot
 
 			mov	[R_EAX], 4F0Ah
@@ -1584,7 +1584,7 @@ Get_BankEntry:
 			mov	ModeMemory, 1
 			mov	edi, [PtrModeInfoBlock]
 
-			movzx	edx, [edi].ModeWinSize
+			movzx	edx, [edi].Struc_ModeInfoBlock.ModeWinSize
 			shl	edx, 10
 			mov	[BankSize], edx
 
@@ -1597,7 +1597,7 @@ Get_BankEntry:
 			mov	byte ptr[GPFShift3+2], bl
 			mov	byte ptr[GPFShift4+2], bl
 
-			movzx	eax, [edi].ModeWinGranularity
+			movzx	eax, [edi].Struc_ModeInfoBlock.ModeWinGranularity
 			sub	ebx, 10
 
 			bsr	eax, eax		; get higher bit position
@@ -1609,8 +1609,8 @@ Get_BankEntry:
 
 			mov	edx, 1 + (1 shl 2)
 			xor	ecx, ecx
-			movzx	eax, [edi].ModeWinAAttributes
-			movzx	ebx, [edi].ModeWinBAttributes
+			movzx	eax, [edi].Struc_ModeInfoBlock.ModeWinAAttributes
+			movzx	ebx, [edi].Struc_ModeInfoBlock.ModeWinBAttributes
 
 			and	eax, edx		; only keep movable & writable bits
 			and	ebx, edx
@@ -1631,11 +1631,11 @@ Get_BankEntry:
 
 			jmp	Init_Error
 win_A:
-			movzx	ebx, [edi].ModeWinASegment
+			movzx	ebx, [edi].Struc_ModeInfoBlock.ModeWinASegment
 			jmp	patch_window
 win_B:
 			inc	ecx
-			movzx	ebx, [edi].ModeWinBSegment
+			movzx	ebx, [edi].Struc_ModeInfoBlock.ModeWinBSegment
 patch_window:
 			shl	ebx, 4			; adress of window
 
@@ -1828,7 +1828,7 @@ Ok_Get:
 
 			mov	eax, [PtrModeInfoBlock]
 
-			movzx	eax, [eax].ModeAttributes
+			movzx	eax, [eax].Struc_ModeInfoBlock.ModeAttributes
 
 			test	eax, 1
 			jnz	Unsupported_Mode	; Supported

@@ -63,16 +63,16 @@ CopyMask		proc	uses ebp
 			xor	eax, eax
 
 			xor	edx, edx
-			mov	al, [esi].Mask_HotX	; Hot X
+			mov	al, [esi].STRUC_MASK.Mask_HotX	; Hot X
 
-			mov	dl, [esi].Mask_HotY	; Hot Y
+			mov	dl, [esi].STRUC_MASK.Mask_HotY	; Hot Y
 			add	ebx, eax
 
 			add	ecx, edx
 ;-----------------------------------------------
-			mov	dl, [esi].Mask_DeltaX	; Delta X
+			mov	dl, [esi].STRUC_MASK.Mask_DeltaX	; Delta X
 
-			mov	al, [esi].Mask_DeltaY	; Nb Line ( Delta Y )
+			mov	al, [esi].STRUC_MASK.Mask_DeltaY	; Nb Line ( Delta Y )
 			add	esi, Size STRUC_MASK	; Skip header
 
 ;----------------------------------------------- Test Clipping

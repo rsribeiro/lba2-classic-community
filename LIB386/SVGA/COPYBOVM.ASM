@@ -1,9 +1,10 @@
 ;----------------------------------------------------------------------------
 			.386
+			.MMX
 
 			.MODEL	FLAT, SYSCALL
 
-			include	iammx.inc
+			;include	iammx.inc
 
 ;----------------------------------------------------------------------------
 			SEG_FS	equ	db 64h
@@ -70,10 +71,12 @@ CopyBoxVESAM		PROC
 			jnz	odd
 loopCopy:
 			movq	mm1, [esi+eax]
-CopyBoxVESAM1::		SEG_FS
+CopyBoxVESAM1::
+			SEG_FS
 			movq	[edi+eax], mm1
 			movq	mm0, [esi+eax+8]
-CopyBoxVESAM2::		SEG_FS
+CopyBoxVESAM2::
+			SEG_FS
 			movq	[edi+eax+8], mm0
 			add	eax, 16
 			jnz	loopCopy
@@ -98,14 +101,17 @@ odd:
 
 loopCopyY:
 			movq	mm0, [esi+eax]
-CopyBoxVESAM3::		SEG_FS
+CopyBoxVESAM3::
+			SEG_FS
 			movq	[edi+eax], mm0
 loopCopyX:
 			movq	mm1, [esi+eax+8]
-CopyBoxVESAM4::		SEG_FS
+CopyBoxVESAM4::
+			SEG_FS
 			movq	[edi+eax+8], mm1
 			movq	mm0, [esi+eax+16]
-CopyBoxVESAM5::		SEG_FS
+CopyBoxVESAM5::
+			SEG_FS
 			movq	[edi+eax+16], mm0
 			add	eax, 16
 			jnz	loopCopyX
@@ -126,7 +132,8 @@ CopyBoxVESAFEnd::
 			add	esi, ecx
 			dec	ebx
 
-CopyBoxVESAM6::		SEG_FS
+CopyBoxVESAM6::
+			SEG_FS
 			movq	[edi], mm0
 
 			lea	edi, [edi+edx]

@@ -1,9 +1,10 @@
 ;----------------------------------------------------------------------------
 			.386
+			.MMX
 
 			.MODEL	FLAT, SYSCALL
 
-			include	iammx.inc
+			;include	iammx.inc
 
 ;----------------------------------------------------------------------------
 			SEG_FS	equ	db 64h
@@ -48,9 +49,11 @@ loopCopy:
 			movq	mm0, [esi]
 			movq	mm1, [esi+8]
 			add	esi, 16
-BlitBoxVESAM1::		SEG_FS
+BlitBoxVESAM1::
+			SEG_FS
 			movq	[edi+eax], mm0
-BlitBoxVESAM2::		SEG_FS
+BlitBoxVESAM2::
+			SEG_FS
 			movq	[edi+eax+8], mm1
 			add	eax, 16
 			jnz	loopCopy

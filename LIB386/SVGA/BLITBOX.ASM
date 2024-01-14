@@ -24,7 +24,7 @@ _DATA		ENDS
 
 ;*══════════════════════════════════════════════════════════════════════════*
 _TEXT		SEGMENT	USE32 PARA PUBLIC 'CODE'
-       		ASSUME	CS:FLAT, DS:FLAT, ES:FLAT, SS:FLAT
+			ASSUME DS:FLAT, ES:FLAT, SS:FLAT
 
 ;*══════════════════════════════════════════════════════════════════════════*
 		extrn	SYSCALL	BlitBoxI:PROC

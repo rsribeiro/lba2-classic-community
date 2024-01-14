@@ -1,9 +1,10 @@
 ;----------------------------------------------------------------------------
 			.386
+			.MMX
 
 			.MODEL	FLAT, SYSCALL
 
-			include	iammx.inc
+			;include	iammx.inc
 
 ;----------------------------------------------------------------------------
 			SEG_FS	equ	db 64h
@@ -46,7 +47,7 @@ ClearBoxVESAM		PROC
 			shr	ebp, 16
 			and	eax, 0FFFFh
 
-			movq	mm0, [ClearColor]
+			movd	mm0, [ClearColor]
 			mov	ecx, ebx
 
 			add	edi, [edx+ebp*4]
@@ -66,9 +67,11 @@ ClearBoxVESAM		PROC
 			test	eax, 8
 			jnz	odd
 loopCopy:
-ClearBoxVESAM1::	SEG_FS
+ClearBoxVESAM1::
+			SEG_FS
 			movq	[edi+eax], mm0
-ClearBoxVESAM2::	SEG_FS
+ClearBoxVESAM2::
+			SEG_FS
 			movq	[edi+eax+8], mm0
 			add	eax, 16
 			jnz	loopCopy
@@ -90,12 +93,15 @@ odd:
 			add	ebp, 8
 
 loopCopyY:
-ClearBoxVESAM3::	SEG_FS
+ClearBoxVESAM3::
+			SEG_FS
 			movq	[edi+eax], mm0
 loopCopyX:
-ClearBoxVESAM4::	SEG_FS
+ClearBoxVESAM4::
+			SEG_FS
 			movq	[edi+eax+8], mm0
-ClearBoxVESAM5::	SEG_FS
+ClearBoxVESAM5::
+			SEG_FS
 			movq	[edi+eax+16], mm0
 			add	eax, 16
 			jnz	loopCopyX
@@ -112,7 +118,8 @@ ClearBoxVESAFEnd::
 @@Just_A_Col:
 			dec	ebx
 
-ClearBoxVESAM6::	SEG_FS
+ClearBoxVESAM6::
+			SEG_FS
 			movq	[edi], mm0
 
 			lea	edi, [edi+edx]

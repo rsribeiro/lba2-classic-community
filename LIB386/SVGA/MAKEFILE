@@ -34,7 +34,7 @@ OBJETS2 =	VESA.OBJ	MOUSEDOS.OBJ					&
 
 CFLAGS += /6s /d3 /oneatxz /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp8 /v
 LFLAGS  = /c /b /l
-AFLAGS += /DSTACK_CALL /nologo /Cx /Zm /Zi /c /W0 /Sa /Zd /Cp /omf
+AFLAGS += /DSTACK_CALL /nologo /Cx /Zi /c /WX /Sa /Zd /Cp /omf
 
 #.SILENT
 
