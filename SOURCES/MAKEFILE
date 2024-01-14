@@ -7,7 +7,7 @@ WRC = wrc
 ASM = ml
 PCHDIR =
 
-AFLAGS  = /DSTACK_CALL /nologo /Cx /Zm /Zi /c /WX /Sa /Zd /omf
+AFLAGS  = /DSTACK_CALL /nologo /Cx /Zi /c /WX /Sa /Zd /omf
 CFLAGS  = /6s /d3 /oneatxz /s /wx /mf /hd /zp8 /v /fh=$(PCHDIR)lba.pch
 LLFLAGS = OP CASEEXACT,STACK=7000,SYMF,MAP,DOSSEG,VERBOSE
 LFLAGS  = /c /b /l

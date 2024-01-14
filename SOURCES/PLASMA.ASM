@@ -40,13 +40,13 @@ Nb_Pts_Control		dd	0
 Do_Plasma		PROC
 
 			push	ebp
-			mov	edi, dword ptr [esi].Plasma_PTR_TexOff
+			mov	edi, dword ptr [esi].Struc_Plasma.Plasma_PTR_TexOff
 
 			; *** Calcul des coeff de Gouraud ***
 			push	esi
 			push	edi
 
-			mov	ecx,dword ptr [esi].Plasma_Interleave
+			mov	ecx,dword ptr [esi].Struc_Plasma.Plasma_Interleave
 			mov	edx,1
 			shl	edx,cl
 			mov	[Nb_Pts_Inter],edx
@@ -55,7 +55,7 @@ Do_Plasma		PROC
 			mov	byte ptr [Nb_Pts_Control],ch
 
 			mov	dl,ch
-			mov	esi,dword ptr [esi].Plasma_PTR_TabVirgule
+			mov	esi,dword ptr [esi].Struc_Plasma.Plasma_PTR_TabVirgule
 @@Lines:
 			push	edx			; Chaque ligne
 			push	ecx
@@ -133,8 +133,8 @@ Do_Plasma		PROC
 
 
 			; *** Copy ***
-			mov	ebx,[esi].Plasma_PTR_TabCouls
-			mov	esi,dword ptr [esi].Plasma_PTR_TabVirgule
+			mov	ebx,[esi].Struc_Plasma.Plasma_PTR_TabCouls
+			mov	esi,dword ptr [esi].Struc_Plasma.Plasma_PTR_TabVirgule
 			xor	eax,eax
 			mov	dl,ch
 
