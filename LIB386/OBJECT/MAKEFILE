@@ -17,7 +17,7 @@ LIB     = DOS_OBJ
 
 CFLAGS = /6s /d3 /oneatxz /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp8 /v
 LFLAGS = /c /b /l
-AFLAGS = /DSTACK_CALL /nologo /Cx /Zm /Zi /c /WX /Sa /D$(DEF) /Zd /Cp /omf
+AFLAGS = /DSTACK_CALL /nologo /Cx /Zi /c /WX /Sa /D$(DEF) /Zd /Cp /omf
 
 #.SILENT
 
