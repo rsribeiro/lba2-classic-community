@@ -22,12 +22,12 @@ TestVuePolyF	PROC
 ;(x2-x1)*(y1-y3)-(y2-y1)*(x1-x3)
 ;   P1  *  P2   -   P3  *  P4
 							; 0   1   2   3   4   5   6   7
-	fild	[esi].Pt_XE				; x1
-	fild	[esi].Pt_YE				; y1  x1
-	fild	[esi+Size STRUC_POINT].Pt_XE		; x2  y1  x1
-	fild	[esi+2*(Size STRUC_POINT)].Pt_YE	; y3  x2  y1  x1
-	fild	[esi+Size STRUC_POINT].Pt_YE		; y2  y3  x2  y1  x1
-	fild	[esi+2*(Size STRUC_POINT)].Pt_XE	; x3  y2  y3  x2  y1  x1
+	fild	[esi].STRUC_POINT.Pt_XE				; x1
+	fild	[esi].STRUC_POINT.Pt_YE				; y1  x1
+	fild	[esi+Size STRUC_POINT].STRUC_POINT.Pt_XE		; x2  y1  x1
+	fild	[esi+2*(Size STRUC_POINT)].STRUC_POINT.Pt_YE	; y3  x2  y1  x1
+	fild	[esi+Size STRUC_POINT].STRUC_POINT.Pt_YE		; y2  y3  x2  y1  x1
+	fild	[esi+2*(Size STRUC_POINT)].STRUC_POINT.Pt_XE	; x3  y2  y3  x2  y1  x1
 	fld	st(5)					; x1  x3  y2  y3  x2  y1  x1
 	fsubp	st(4),st				; x3  y2  y3  P1  y1  x1
 	fld	st(4)					; y1  x3  y2  y3  P1  y1  x1

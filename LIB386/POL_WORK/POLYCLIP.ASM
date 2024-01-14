@@ -51,7 +51,7 @@ PUBLIC	SYSCALL		ClipperZ
 ;			***************
 
 INCLUDE			FILLER.INC
-INCLUDE			IAMMX.INC
+;INCLUDE			IAMMX.INC
 
 
 ;			**************
@@ -71,6 +71,7 @@ INCLUDE			IAMMX.INC
 ;			**************************
 
 			.386
+			.MMX
 ;			.MODEL	FLAT, SYSCALL
 
 
@@ -140,7 +141,7 @@ _DATA			ENDS
 ;			************
 ;			.CODE
 _TEXT			SEGMENT	USE32 PARA PUBLIC 'CODE'
-			ASSUME	CS:FLAT, DS:FLAT, ES:FLAT, SS:FLAT
+			ASSUME	DS:FLAT, ES:FLAT, SS:FLAT
 
 
 ;				******************
@@ -185,7 +186,7 @@ ClipperZ		PROC
 			push	ebx			; EBX = Last vertex (in Local Variable)
 			mov	ebp,eax			; EBP = Clipping orthogonal plane
 
-			mov	eax,dword ptr [ebx].V_Z0
+			mov	eax,dword ptr [ebx].STRUC_CLIPVERTEX.V_Z0
 			xor	edx,edx 		; EDX = 1 if vertex in wrong half-space
 
 			cmp	eax,ebp
@@ -197,7 +198,7 @@ ClipperZ		PROC
 			; *****************
 			ALIGN	4
 @@Test_Next_Pt:						; Check next point
-			mov	eax,dword ptr [esi+Size STRUC_CLIPVERTEX].V_Z0
+			mov	eax,dword ptr [esi+Size STRUC_CLIPVERTEX].STRUC_CLIPVERTEX.V_Z0
 			add	esi,Size STRUC_CLIPVERTEX; ESI = Current point
 
 			cmp	eax,ebp
@@ -237,23 +238,23 @@ ClipperZ		PROC
 			add	edi,Size STRUC_CLIPVERTEX
 			inc	ecx
 @@Pas_Inters:
-			mov	eax,[esi].V_X0		; Visible
-			mov	edx,[esi].V_Y0
+			mov	eax,[esi].STRUC_CLIPVERTEX.V_X0		; Visible
+			mov	edx,[esi].STRUC_CLIPVERTEX.V_Y0
 
-			mov	[edi].V_X0,eax
-			mov	[edi].V_Y0,edx
+			mov	[edi].STRUC_CLIPVERTEX.V_X0,eax
+			mov	[edi].STRUC_CLIPVERTEX.V_Y0,edx
 
-			mov	eax,[esi].V_Z0		; Visible
-			mov	edx,dword ptr [esi].V_MapU
+			mov	eax,[esi].STRUC_CLIPVERTEX.V_Z0		; Visible
+			mov	edx,dword ptr [esi].STRUC_CLIPVERTEX.V_MapU
 
-			mov	[edi].V_Z0,eax
-			mov	eax,dword ptr [esi].V_Light
+			mov	[edi].STRUC_CLIPVERTEX.V_Z0,eax
+			mov	eax,dword ptr [esi].STRUC_CLIPVERTEX.V_Light
 
-			mov	dword ptr [edi].V_MapU,edx
-			mov	dword ptr [edi].V_Light,eax
+			mov	dword ptr [edi].STRUC_CLIPVERTEX.V_MapU,edx
+			mov	dword ptr [edi].STRUC_CLIPVERTEX.V_Light,eax
 
-		mov	ax,[esi].V_Dummy
-		mov	[edi].V_Dummy,ax
+		mov	ax,[esi].STRUC_CLIPVERTEX.V_Dummy
+		mov	[edi].STRUC_CLIPVERTEX.V_Dummy,ax
 
 
 			inc	ecx
@@ -282,7 +283,7 @@ ClipperZ		PROC
 			push	ebx			; EBX = Last vertex (in Local Variable)
 			mov	ebp,eax			; EBP = Clipping orthogonal plane
 
-			mov	eax,dword ptr [ebx].V_Z0
+			mov	eax,dword ptr [ebx].STRUC_CLIPVERTEX.V_Z0
 			xor	edx,edx 		; EDX = 1 if vertex in wrong half-space
 
 			cmp	eax,ebp
@@ -294,7 +295,7 @@ ClipperZ		PROC
 			; *****************
 			ALIGN	4
 @@NegTest_Next_Pt:					; Check next point
-			mov	eax,dword ptr [esi+Size STRUC_CLIPVERTEX].V_Z0
+			mov	eax,dword ptr [esi+Size STRUC_CLIPVERTEX].STRUC_CLIPVERTEX.V_Z0
 			add	esi,Size STRUC_CLIPVERTEX; ESI = Current point
 
 			cmp	eax,ebp
@@ -334,23 +335,23 @@ ClipperZ		PROC
 			add	edi,Size STRUC_CLIPVERTEX
 			inc	ecx
 @@NegPas_Inters:
-			mov	eax,[esi].V_X0		; Visible
-			mov	edx,[esi].V_Y0
+			mov	eax,[esi].STRUC_CLIPVERTEX.V_X0		; Visible
+			mov	edx,[esi].STRUC_CLIPVERTEX.V_Y0
 
-			mov	[edi].V_X0,eax
-			mov	[edi].V_Y0,edx
+			mov	[edi].STRUC_CLIPVERTEX.V_X0,eax
+			mov	[edi].STRUC_CLIPVERTEX.V_Y0,edx
 
-			mov	eax,[esi].V_Z0		; Visible
-			mov	edx,dword ptr [esi].V_MapU
+			mov	eax,[esi].STRUC_CLIPVERTEX.V_Z0		; Visible
+			mov	edx,dword ptr [esi].STRUC_CLIPVERTEX.V_MapU
 
-			mov	[edi].V_Z0,eax
-			mov	eax,dword ptr [esi].V_Light
+			mov	[edi].STRUC_CLIPVERTEX.V_Z0,eax
+			mov	eax,dword ptr [esi].STRUC_CLIPVERTEX.V_Light
 
-			mov	dword ptr [edi].V_MapU,edx
-			mov	dword ptr [edi].V_Light,eax
+			mov	dword ptr [edi].STRUC_CLIPVERTEX.V_MapU,edx
+			mov	dword ptr [edi].STRUC_CLIPVERTEX.V_Light,eax
 
-		mov	ax,[esi].V_Dummy
-		mov	[edi].V_Dummy,ax
+		mov	ax,[esi].STRUC_CLIPVERTEX.V_Dummy
+		mov	[edi].STRUC_CLIPVERTEX.V_Dummy,ax
 
 
 			inc	ecx
@@ -385,14 +386,14 @@ Clipping_Z		PROC
 			push	ebp
 
 					; *** Factor ***
-			mov	ecx,[esi].V_Z0
-			mov	edx,[ebx].V_Z0
+			mov	ecx,[esi].STRUC_CLIPVERTEX.V_Z0
+			mov	edx,[ebx].STRUC_CLIPVERTEX.V_Z0
 
 			sub	ecx,edx			; ECX = (CurZ-LastZ)
 			sub	edx,ebp
 
 			mov	eax,edx			; EAX:EDX = 65536*(LastZ-ClipZ)
-			mov	[edi].V_Z0,ebp
+			mov	[edi].STRUC_CLIPVERTEX.V_Z0,ebp
 
 			shl	eax,24
 
@@ -404,8 +405,8 @@ Clipping_Z		PROC
 			neg	ecx			; ECX = (65536*(ClipZ-LastZ)) / (CurZ-LastZ)
 
 					; *** X0 ***
-			mov	eax,[esi].V_X0
-			mov	ebp,[ebx].V_X0
+			mov	eax,[esi].STRUC_CLIPVERTEX.V_X0
+			mov	ebp,[ebx].STRUC_CLIPVERTEX.V_X0
 			sub	eax,ebp			; EAX = CurX-LastX
 
 			imul	ecx
@@ -415,11 +416,11 @@ Clipping_Z		PROC
 			or	eax,edx
 
 			add	ebp,eax
-			mov	[edi].V_X0,ebp
+			mov	[edi].STRUC_CLIPVERTEX.V_X0,ebp
 
 					; *** Y0 ***
-			mov	eax,[esi].V_Y0
-			mov	ebp,[ebx].V_Y0
+			mov	eax,[esi].STRUC_CLIPVERTEX.V_Y0
+			mov	ebp,[ebx].STRUC_CLIPVERTEX.V_Y0
 			sub	eax,ebp
 
 			imul	ecx
@@ -429,11 +430,11 @@ Clipping_Z		PROC
 			or	eax,edx
 
 			add	ebp,eax
-			mov	[edi].V_Y0,ebp
+			mov	[edi].STRUC_CLIPVERTEX.V_Y0,ebp
 
 					; *** MapU ***
-			mov	eax,dword ptr [esi].V_MapU
-			mov	ebp,dword ptr [ebx].V_MapU
+			mov	eax,dword ptr [esi].STRUC_CLIPVERTEX.V_MapU
+			mov	ebp,dword ptr [ebx].STRUC_CLIPVERTEX.V_MapU
 
 			and	eax,0FFFFh
 			and	ebp,0FFFFh
@@ -447,12 +448,12 @@ Clipping_Z		PROC
 			or	eax,edx
 
 			add	ebp,eax
-			mov	[edi].V_MapU,bp
+			mov	[edi].STRUC_CLIPVERTEX.V_MapU,bp
 
 
 					; *** MapV ***
-			mov	eax,dword ptr [esi].V_MapU
-			mov	ebp,dword ptr [ebx].V_MapU
+			mov	eax,dword ptr [esi].STRUC_CLIPVERTEX.V_MapU
+			mov	ebp,dword ptr [ebx].STRUC_CLIPVERTEX.V_MapU
 
 			shr	eax,16
 			shr	ebp,16
@@ -466,17 +467,17 @@ Clipping_Z		PROC
 			or	eax,edx
 
 			add	ebp,eax
-			mov	[edi].V_MapV,bp
+			mov	[edi].STRUC_CLIPVERTEX.V_MapV,bp
 
 
 			; dummy (index point)
 
-			mov	ax,word ptr [esi].V_Dummy
-			mov	[edi].V_Dummy, ax
+			mov	ax,word ptr [esi].STRUC_CLIPVERTEX.V_Dummy
+			mov	[edi].STRUC_CLIPVERTEX.V_Dummy, ax
 
 					; *** Light ***
-			mov	eax,dword ptr [esi].V_Light
-			mov	ebp,dword ptr [ebx].V_Light
+			mov	eax,dword ptr [esi].STRUC_CLIPVERTEX.V_Light
+			mov	ebp,dword ptr [ebx].STRUC_CLIPVERTEX.V_Light
 
 			and	eax,0FFFFh
 			and	ebp,0FFFFh
@@ -490,7 +491,7 @@ Clipping_Z		PROC
 			or	eax,edx
 
 			add	ebp,eax
-			mov	[edi].V_Light,bp
+			mov	[edi].STRUC_CLIPVERTEX.V_Light,bp
 
 			pop	ebp
 			pop	ecx
@@ -510,10 +511,10 @@ Clipping_ZFPU::
 			fldcw	[Status_Int]
 
 					; *** Factor ***
-			mov	ecx,[esi].V_Z0
-			mov	edx,[ebx].V_Z0
+			mov	ecx,[esi].STRUC_CLIPVERTEX.V_Z0
+			mov	edx,[ebx].STRUC_CLIPVERTEX.V_Z0
 
-			mov	[edi].V_Z0,ebp
+			mov	[edi].STRUC_CLIPVERTEX.V_Z0,ebp
 			sub	ecx,edx			; ECX = (CurZ-LastZ)
 
 			sub	ebp,edx			; EBP = (ClipZ-LastZ)
@@ -529,23 +530,23 @@ Clipping_ZFPU::
 
 
 					; *** X0 ***
-			mov	ecx,[esi].V_X0
-			mov	ebp,[ebx].V_X0
+			mov	ecx,[esi].STRUC_CLIPVERTEX.V_X0
+			mov	ebp,[ebx].STRUC_CLIPVERTEX.V_X0
 
 			sub	ecx,ebp			; EAX = CurX-LastX
 			mov	[esp+4],ebp		; Save LastX
 
 			mov	[esp],ecx		; Save dX
-			mov	ecx,[esi].V_Y0
+			mov	ecx,[esi].STRUC_CLIPVERTEX.V_Y0
 
-			mov	ebp,[ebx].V_Y0
-			mov	edx,dword ptr [esi].V_MapU
+			mov	ebp,[ebx].STRUC_CLIPVERTEX.V_Y0
+			mov	edx,dword ptr [esi].STRUC_CLIPVERTEX.V_MapU
 
 			sub	ecx,ebp
 			push	ebp			; Save LastY
 
 			push	ecx			; Save dY
-			mov	ebp,dword ptr [ebx].V_MapU
+			mov	ebp,dword ptr [ebx].STRUC_CLIPVERTEX.V_MapU
 
 			and	edx,0FFFFh
 			and	ebp,0FFFFh
@@ -554,19 +555,19 @@ Clipping_ZFPU::
 			push	ebp			; Save LastU
 
 			push	edx			; Save dU
-			mov	eax,dword ptr [esi].V_MapU
+			mov	eax,dword ptr [esi].STRUC_CLIPVERTEX.V_MapU
 
 			shr	eax,16
-			mov	ebp,dword ptr [ebx].V_MapU
+			mov	ebp,dword ptr [ebx].STRUC_CLIPVERTEX.V_MapU
 
 			shr	ebp,16
-			mov	edx,dword ptr [esi].V_Light
+			mov	edx,dword ptr [esi].STRUC_CLIPVERTEX.V_Light
 
 			sub	eax,ebp
 			push	ebp			; Save LastV
 
 			push	eax			; Save dV
-			mov	ebp,dword ptr [ebx].V_Light
+			mov	ebp,dword ptr [ebx].STRUC_CLIPVERTEX.V_Light
 
 			and	edx,0FFFFh
 			and	ebp,0FFFFh
@@ -628,7 +629,7 @@ Clipping_ZFPU::
 
 			fxch	st(5)			; NX  dV  mU  NY  LastU  LastV  D
 
-			fistp	[edi].V_X0		; dV  mU  NY  LastU  LastV  D
+			fistp	[edi].STRUC_CLIPVERTEX.V_X0		; dV  mU  NY  LastU  LastV  D
 
 			fmul	st,st(5)		; mV  mU  NY  LastU  LastV  D
 			fxch	st(1)			; mU  mV  NY  LastU  LastV  D
@@ -636,7 +637,7 @@ Clipping_ZFPU::
 			faddp	st(3),st		; mV  NY  NU  LastV  D
 			fxch	st(1)			; NY  mV  NU  LastV  D
 
-			fistp	[edi].V_Y0		; mV  NU  LastV  D
+			fistp	[edi].STRUC_CLIPVERTEX.V_Y0		; mV  NU  LastV  D
 
 			fild	dword ptr [esp+0*4]	; dL  mV  NU  LastV  D
 
@@ -655,7 +656,7 @@ Clipping_ZFPU::
 
 			fistp	dword ptr [esp+4]
 
-			fistp	[edi].V_Light
+			fistp	[edi].STRUC_CLIPVERTEX.V_Light
 
 			mov	eax,[esp]
 			mov	edx,[esp+4]
@@ -666,12 +667,12 @@ Clipping_ZFPU::
 			or	eax,edx
 			add	esp,12*4
 
-			mov	dword ptr [edi].V_MapU,eax
+			mov	dword ptr [edi].STRUC_CLIPVERTEX.V_MapU,eax
 
 
 		; dummy (index point)
-		mov	ax,word ptr [esi].V_Dummy
-		mov	[edi].V_Dummy, ax
+		mov	ax,word ptr [esi].STRUC_CLIPVERTEX.V_Dummy
+		mov	[edi].STRUC_CLIPVERTEX.V_Dummy, ax
 
 
 
