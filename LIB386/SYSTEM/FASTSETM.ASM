@@ -1,9 +1,10 @@
 ;----------------------------------------------------------------------------
 			.386
+			.MMX
 
 			.MODEL	SMALL, SYSCALL
 
-			include	iammx.inc
+			;include	iammx.inc
 
 ;----------------------------------------------------------------------------
 			.CODE
@@ -20,7 +21,7 @@
 
 FastSetM		PROC
 
-			movdt		mm0, eax
+			movd		mm0, eax
 
 			punpcklbw	mm0, mm0
 			cmp		ecx, 8
