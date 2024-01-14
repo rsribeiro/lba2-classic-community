@@ -21,11 +21,11 @@
 
 GetMatrixTransF	PROC
 
-		fld	[esi].MAT_MTX	; X
+		fld	[esi].Struc_MatriceMAT.MAT_MTX	; X
 
-		fld	[esi].MAT_MTY	; Y X
+		fld	[esi].Struc_MatriceMAT.MAT_MTY	; Y X
 
-		fld	[esi].MAT_MTZ	; Z Y X
+		fld	[esi].Struc_MatriceMAT.MAT_MTZ	; Z Y X
 
 		fistp	dword ptr[ecx]	; Y X
 

@@ -28,10 +28,10 @@
 
 InitMatrixTransI	proc
 
-		mov	[edi].MAT_MTX, eax
-		mov	[edi].MAT_MTY, ebx
+		mov	[edi].Struc_MatriceMAT.MAT_MTX, eax
+		mov	[edi].Struc_MatriceMAT.MAT_MTY, ebx
 
-		mov	[edi].MAT_MTZ, ecx
+		mov	[edi].Struc_MatriceMAT.MAT_MTZ, ecx
 
 		ret
 

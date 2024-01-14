@@ -4,7 +4,7 @@
 
 		.model SMALL, SYSCALL
 
-		include iammx.inc
+		;include iammx.inc
 		include mat.inc
 
 ;*══════════════════════════════════════════════════════════════════════════*

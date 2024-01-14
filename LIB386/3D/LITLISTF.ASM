@@ -100,9 +100,9 @@ LightListF		PROC
 			fstp	[Z0]			;
 
 							; 00  01  02  03  04  05  06  07
-			fild	[esi+ecx*8-8].VT_X	; X
-			fild	[esi+ecx*8-8].VT_Y	; Y   X
-			fild	[esi+ecx*8-8].VT_Z	; Z   Y   X
+			fild	[esi+ecx*8-8].STRUC_VERTEX.VT_X	; X
+			fild	[esi+ecx*8-8].STRUC_VERTEX.VT_Y	; Y   X
+			fild	[esi+ecx*8-8].STRUC_VERTEX.VT_Z	; Z   Y   X
 
 			fxch	st(2)			; X   Y   Z
 
@@ -118,9 +118,9 @@ LightListF		PROC
 			push	ebx			; <=> sub esp,4; but doesn't modify the flags
 			jz	@@End1
 
-			fild	[esi+ecx*8].VT_Z	; Z   X'  Z'  Y'
-			fild	[esi+ecx*8].VT_Y	; Y   Z   Z'  X'  Z'  Y'
-			fild	[esi+ecx*8].VT_X	; X   Y   Z   X'  Z'  Y'
+			fild	[esi+ecx*8].STRUC_VERTEX.VT_Z	; Z   X'  Z'  Y'
+			fild	[esi+ecx*8].STRUC_VERTEX.VT_Y	; Y   Z   Z'  X'  Z'  Y'
+			fild	[esi+ecx*8].STRUC_VERTEX.VT_X	; X   Y   Z   X'  Z'  Y'
 
 			fxch	st(1)			; Y   X   Z   X'  Z'  Y'
 
@@ -148,11 +148,11 @@ LightListF		PROC
 			fmul	[Z0]			; z'  x'  L   y'
 			fxch	st(2)			; L   x'  z'  y'
 
-			fild	[esi+ecx*8].VT_X	; X   L   X'  Z'  Y'
+			fild	[esi+ecx*8].STRUC_VERTEX.VT_X	; X   L   X'  Z'  Y'
 
-			fild	[esi+ecx*8].VT_Y	; Y   X   L   X'  Z'  Y'
+			fild	[esi+ecx*8].STRUC_VERTEX.VT_Y	; Y   X   L   X'  Z'  Y'
 
-			fild	[esi+ecx*8].VT_Z	; Z   Y   X   L   X'  Z'  Y'
+			fild	[esi+ecx*8].STRUC_VERTEX.VT_Z	; Z   Y   X   L   X'  Z'  Y'
 
 			fxch	st(3)			; L   Y   X   Z   X'  Z'  Y'
 
@@ -220,5 +220,3 @@ LightListF		ENDP
 ;*══════════════════════════════════════════════════════════════════════════*
 ;		The
 		END
-
-

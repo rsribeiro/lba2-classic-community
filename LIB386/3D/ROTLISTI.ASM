@@ -114,11 +114,11 @@ ENDIF
 		mov	End_Loop, ecx	; final address for end of loop
 		mov	Delta2, esi	; delta+4
 
-		mov	esi, [ebx].MAT_M11
-		mov	edi, [ebx].MAT_M12
+		mov	esi, [ebx].Struc_MatriceMAT.MAT_M11
+		mov	edi, [ebx].Struc_MatriceMAT.MAT_M12
 
 		mov	ebp, esi
-		mov	ecx, [ebx].MAT_M13
+		mov	ecx, [ebx].Struc_MatriceMAT.MAT_M13
 
 		imul	ebp, edi	; M11*M12
 
@@ -131,13 +131,13 @@ ENDIF
 		mov	[Trans_X], ebp	; - M11*M12
 
 		mov	Mat_13, ecx
-		mov	eax, [ebx].MAT_M32
+		mov	eax, [ebx].Struc_MatriceMAT.MAT_M32
 
-		mov	esi, [ebx].MAT_M21
-		mov	edi, [ebx].MAT_M22
+		mov	esi, [ebx].Struc_MatriceMAT.MAT_M21
+		mov	edi, [ebx].Struc_MatriceMAT.MAT_M22
 
 		mov	ebp, esi
-		mov	ecx, [ebx].MAT_M23
+		mov	ecx, [ebx].Struc_MatriceMAT.MAT_M23
 
 		imul	ebp, edi	; M21*M22
 
@@ -151,10 +151,10 @@ ENDIF
 		mov	Mat_23, ecx
 
 		mov	[Trans_Y], ebp	; - M21*M22
-		mov	edx, [ebx].MAT_M31
+		mov	edx, [ebx].Struc_MatriceMAT.MAT_M31
 
 		mov	ebp, edx
-		mov	ebx, [ebx].MAT_M33
+		mov	ebx, [ebx].Struc_MatriceMAT.MAT_M33
 
 		imul	ebp, eax	; M31*M32
 

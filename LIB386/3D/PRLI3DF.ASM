@@ -1,11 +1,12 @@
 ;*══════════════════════════════════════════════════════════════════════════*
 
 		.386p
+		.MMX
 
 		.model FLAT, SYSCALL
 
 		include	mat.inc
-		include	iammx.inc
+		;include	iammx.inc
 
 ;*══════════════════════════════════════════════════════════════════════════*
 
@@ -291,7 +292,8 @@ UpdateYMax1:
 		mov	[ScreenYMax], eax
 		jmp	OkYMax1
 Clip0:
-     		mov	[edi], 80008000h
+     	mov eax, 80008000h
+     	mov	[edi], eax
 		add	edi, 4
 
 		cmp	esi, ebp
@@ -312,7 +314,8 @@ Clip0:
 Clip:
   		mov	edx, [NearClip]
 ClipLoop:
-		mov	[edi], 80008000h
+		mov eax, 80008000h
+     	mov	[edi], eax
 		add	edi, 4
 
 		cmp	esi, ebp

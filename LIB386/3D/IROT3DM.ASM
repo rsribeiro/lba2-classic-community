@@ -1,10 +1,11 @@
 ;*══════════════════════════════════════════════════════════════════════════*
 
 		.386p
+		.MMX
 
 		.model SMALL, SYSCALL
 
-		INCLUDE	IAMMX.INC		; Pour pouvoir assembler du MMx
+		;INCLUDE	IAMMX.INC		; Pour pouvoir assembler du MMx
 
 ;*══════════════════════════════════════════════════════════════════════════*
 
@@ -52,10 +53,10 @@ InverseRotatePointM	PROC
 		movq		mm2, mm0	; mm2 = 22 12 21 11
 		or		eax, ebx
 
-		movdt		mm5, eax	; mm5 =  0  0  Y  X
+		movd		mm5, eax	; mm5 =  0  0  Y  X
 		punpckldq 	mm0, mm1	; mm0 =  0 31 21 11
 
-		movdt		mm6, ecx	; mm6 =  0  0  .  Z
+		movd		mm6, ecx	; mm6 =  0  0  .  Z
 		punpckhdq 	mm2, mm1	; mm2 =  0 32 22 12
 
 		punpckldq	mm5, mm6	; mm5 =  .  Z  Y  X
@@ -85,9 +86,9 @@ InverseRotatePointM	PROC
 
 		psrad		mm4, 14
 
-		movq		[X0], mm0
+		movd		[X0], mm0
 
-		movdf		[Z0], mm4
+		movd		[Z0], mm4
 
  		ret
 

@@ -34,11 +34,11 @@ InitMatrixTransF	PROC
 
 		add	esp, 4*3
 
-		fstp	[edi].MAT_MTX
+		fstp	[edi].Struc_MatriceMAT.MAT_MTX
 
-		fstp	[edi].MAT_MTY
+		fstp	[edi].Struc_MatriceMAT.MAT_MTY
 
-		fstp	[edi].MAT_MTZ
+		fstp	[edi].Struc_MatriceMAT.MAT_MTZ
 
 		ret
 

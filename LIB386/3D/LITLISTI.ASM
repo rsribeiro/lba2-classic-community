@@ -82,18 +82,18 @@ LightListI		PROC
 			dec	ecx
 			jz	@@Exit
 @@Loop:
-			movsx	ebp,[esi].VT_X
+			movsx	ebp,[esi].STRUC_VERTEX.VT_X
 
 			imul	ebp,ebx
 
-			movsx	eax,[esi].VT_Y
+			movsx	eax,[esi].STRUC_VERTEX.VT_Y
 
 			imul	eax,edx
 
 			add	ebp,eax
 			add	edi, 2
 
-			movsx	eax,[esi].VT_Z
+			movsx	eax,[esi].STRUC_VERTEX.VT_Z
 
 			imul	eax,[Z0]
 

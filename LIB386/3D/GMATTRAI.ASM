@@ -28,9 +28,9 @@
 
 GetMatrixTransI	proc
 
-		mov	edx, [esi].MAT_MTX
-		mov	edi, [esi].MAT_MTY
-		mov	esi, [esi].MAT_MTZ
+		mov	edx, [esi].Struc_MatriceMAT.MAT_MTX
+		mov	edi, [esi].Struc_MatriceMAT.MAT_MTY
+		mov	esi, [esi].Struc_MatriceMAT.MAT_MTZ
 
 		mov	[eax], edx
 		mov	[ebx], edi

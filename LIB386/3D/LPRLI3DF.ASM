@@ -1,11 +1,12 @@
 ;*══════════════════════════════════════════════════════════════════════════*
 
 		.386p
+		.MMX
 
 		.model FLAT, SYSCALL
 
 		include	mat.inc
-		include	iammx.inc
+		;include	iammx.inc
 
 ;*══════════════════════════════════════════════════════════════════════════*
 
@@ -279,7 +280,8 @@ Clip0:
   		mov	edx, [NearClip]
 ClipLoop0:
 		add	esi, 12
-     		mov	[edi], 80008000h
+		mov eax, 80008000h
+     		mov	[edi], eax
 
 		cmp	esi, ebp
      		je	ExitExit
@@ -300,7 +302,8 @@ Clip:
   		mov	ecx, [esp+16]
 ClipLoop:
 		add	esi, 12
-		mov	[edi], 80008000h
+		mov eax, 80008000h
+		mov	[edi], eax
 
 		cmp	esi, ebp
      		je	ExitLoop

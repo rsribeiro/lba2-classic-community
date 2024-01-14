@@ -38,22 +38,22 @@ LongRotateProjectPointIsoI proc
 		push	ebp
 		mov	[Yp], eax
 
-		imul	[esi].MAT_M11
+		imul	[esi].Struc_MatriceMAT.MAT_M11
 
 		mov     ebp, eax
- 		mov	eax, [esi].MAT_M12
+ 		mov	eax, [esi].Struc_MatriceMAT.MAT_M12
 		mov     edi, edx
 
 		imul	ebx
 
 		add     ebp, eax
-		mov	eax, [esi].MAT_M13
+		mov	eax, [esi].Struc_MatriceMAT.MAT_M13
 		adc     edi, edx
 
 		imul	ecx
 
 		add     ebp, eax
-		mov     eax, [esi].MAT_M21
+		mov     eax, [esi].Struc_MatriceMAT.MAT_M21
 		adc     edi, edx
 
 		imul    [Yp]
@@ -63,18 +63,18 @@ LongRotateProjectPointIsoI proc
 		mov     edi, edx
 		mov	[Xp], ebp
 		mov     ebp, eax
-		mov	eax, [esi].MAT_M22
+		mov	eax, [esi].Struc_MatriceMAT.MAT_M22
 
 		imul	ebx
 
 		add     ebp, eax
-		mov	eax, [esi].MAT_M23
+		mov	eax, [esi].Struc_MatriceMAT.MAT_M23
 		adc     edi, edx
 
 		imul	ecx
 
 		add     ebp, eax
-		mov     eax, [esi].MAT_M31
+		mov     eax, [esi].Struc_MatriceMAT.MAT_M31
 		adc     edi, edx
 
 		imul    [Yp]
@@ -84,12 +84,12 @@ LongRotateProjectPointIsoI proc
 		mov     edi, edx
 		mov	[Yp], ebp
 		mov     ebp, eax
-		mov	eax, [esi].MAT_M32
+		mov	eax, [esi].Struc_MatriceMAT.MAT_M32
 
 		imul	ebx
 
 		add     ebp, eax
-		mov	eax, [esi].MAT_M33
+		mov	eax, [esi].Struc_MatriceMAT.MAT_M33
 		adc     edi, edx
 
 		imul	ecx
