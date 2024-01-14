@@ -25,11 +25,11 @@ ObjectClear	proc
 		xor	eax, eax
 		rep	stosd
 
-		mov	[ebx].Body, -1
-		mov	[ebx].NextBody, -1
-		mov	[ebx].Texture, -1
-		mov	[ebx].NextTexture, -1
-		mov	[ebx].Anim, -1
+		mov	[ebx].OBJ_3D.Body, -1
+		mov	[ebx].OBJ_3D.NextBody, -1
+		mov	[ebx].OBJ_3D.Texture, -1
+		mov	[ebx].OBJ_3D.NextTexture, -1
+		mov	[ebx].OBJ_3D.Anim, -1
 
 		ret
 

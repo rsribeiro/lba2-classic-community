@@ -20,11 +20,11 @@
 
 ObjectInitTexture proc
 
-		mov	[ebx].NextTexture, eax
-		cmp	[ebx].Texture, -1
+		mov	[ebx].OBJ_3D.NextTexture, eax
+		cmp	[ebx].OBJ_3D.Texture, -1
 		jne	oktexture
 
-		mov	[ebx].Texture, eax
+		mov	[ebx].OBJ_3D.Texture, eax
 oktexture:
 		ret
 

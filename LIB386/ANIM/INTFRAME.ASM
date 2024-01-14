@@ -29,7 +29,7 @@
 
 ObjectSetInterFrame proc uses ebp
 
-		mov	eax, [ebx].Status
+		mov	eax, [ebx].OBJ_3D.Status
 
 		test	eax, STATUS_FRAME	; something to do ?
 		jnz	exit
@@ -38,9 +38,9 @@ ObjectSetInterFrame proc uses ebp
 		jz	exit
 
 		xor	eax, eax
-		mov	esi, [ebx].Anim
+		mov	esi, [ebx].OBJ_3D.Anim
 
-		mov	[ebx].Status, eax	; ok nothing to do next time
+		mov	[ebx].OBJ_3D.Status, eax	; ok nothing to do next time
 		mov	eax, [TransFctAnim]
 
 		test	eax, eax
@@ -48,23 +48,23 @@ ObjectSetInterFrame proc uses ebp
 
 		call	eax
 skipTrans:
-		mov	eax, [ebx].Status
-		mov	edi, [ebx].LastOfsFrame
+		mov	eax, [ebx].OBJ_3D.Status
+		mov	edi, [ebx].OBJ_3D.LastOfsFrame
 
-		cmp	[ebx].LastOfsIsPtr, 1
+		cmp	[ebx].OBJ_3D.LastOfsIsPtr, 1
 		je	skipofs
 		add	edi, esi
 skipofs:
-		add	esi, [ebx].NextOfsFrame
+		add	esi, [ebx].OBJ_3D.NextOfsFrame
 
-		mov	ecx, [ebx].NbGroups
+		mov	ecx, [ebx].OBJ_3D.NbGroups
 		add	edi, 16			; -> group 1
 		add	esi, 16			; -> group 1
 		dec	ecx
 		jz	exit			; only one group? exit
 
-		lea	ebp, [ebx].CurrentFrame
-		mov	ebx, [ebx].Interpolator
+		lea	ebp, [ebx].OBJ_3D.CurrentFrame
+		mov	ebx, [ebx].OBJ_3D.Interpolator
 nextgrouprot:
 		mov	ax, [esi]
 		mov	[ebp], ax

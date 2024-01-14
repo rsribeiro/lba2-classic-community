@@ -21,15 +21,15 @@
 ObjectInitBody	proc
 ;		pobj:edx, body:eax
 
-		mov	ecx, [ebx].Status
-		mov	[ebx].NextBody, eax
+		mov	ecx, [ebx].OBJ_3D.Status
+		mov	[ebx].OBJ_3D.NextBody, eax
 		or	ecx, STATUS_BODY
-		cmp	[ebx].Body, -1
-		mov	[ebx].Status, ecx
+		cmp	[ebx].OBJ_3D.Body, -1
+		mov	[ebx].OBJ_3D.Status, ecx
 		je	firstBody
 		ret
 firstBody:
-		mov	[ebx].Body, eax
+		mov	[ebx].OBJ_3D.Body, eax
 		ret
 
 ObjectInitBody	endp
