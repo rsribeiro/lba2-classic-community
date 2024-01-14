@@ -32,7 +32,7 @@ CFLAGS  += /DDEBUG_TOOLS /DCDROM /DLBA_GAME
 
 CFLAGS += /6s /d3 /oneatxz /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp8 /v
 LFLAGS = /c /b /l
-AFLAGS += /DSTACK_CALL /nologo /Cx /c /W0 /Sa /Zd /Cp /omf
+AFLAGS += /DSTACK_CALL /nologo /Cx /c /WX /Sa /Zd /Cp /omf
 
 #.SILENT
 
