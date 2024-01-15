@@ -25,7 +25,7 @@ ENDIF
 
 
 
-			.486P
+			.586P
 			.MMX
 ;			.MODEL	FLAT, SYSCALL
 

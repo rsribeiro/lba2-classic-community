@@ -335,7 +335,7 @@ M_FILL_CLIP		MACRO	Type
 ;			*** SEGMENTATION MODEL ***
 ;			**************************
 
-			.386
+			.586
 			.387
 			.MMX
 ;			.MODEL	FLAT, SYSCALL

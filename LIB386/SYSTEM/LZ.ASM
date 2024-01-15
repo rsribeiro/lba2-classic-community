@@ -40,7 +40,7 @@ ENDIF
 ;	parm	[edi] [ebx] [ecx] [eax]	\
 ;	modify	[edx esi]
 
-ExpandLZ		PROC
+ExpandLZ		PROC SYSCALL
 
 IFDEF	_WIN32
 			jmp	NEAR PTR ExpandLZInit	; This code is 5 bytes long

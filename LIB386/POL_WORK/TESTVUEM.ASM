@@ -1,4 +1,4 @@
-			.386
+			.586
 			.MMX
 			INCLUDE	FILLER.INC
 			;INCLUDE	IAMMX.INC

@@ -19,7 +19,7 @@
 			public	SYSCALL      	CopyBlockShade
 
 ;//				.code
-Seg_Code		SEGMENT	PUBLIC PARA USE32
+Seg_Code		SEGMENT	PUBLIC PARA USE32 'CODE'
 
 ;*══════════════════════════════════════════════════════════════════════════*
 ;----------------------------------------------------------------------------
