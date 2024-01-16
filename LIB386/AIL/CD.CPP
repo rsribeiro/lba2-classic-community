@@ -33,20 +33,15 @@ static	S32		OldVolumeCD	;
 
 static	S32	CheckCD()
 {
-#ifdef USE_MSS
 	if(!Cd)	return	FALSE	;
 
 	return(AIL_redbook_status(Cd) != REDBOOK_ERROR) ;
-#else
-	return FALSE;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 char	OpenCD(char *volume_name)
 {
-#ifdef USE_MSS
 	char	drive	;
 
 	for(drive='A'; drive<='Z'; drive++)
@@ -130,16 +125,12 @@ error:
 	{
 		return 0		;
 	}
-#else
-	return 0		;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	CloseCD()
 {
-#ifdef USE_MSS
 	if(!Cd)		return	;
 
 	StopCD()		;
@@ -151,14 +142,12 @@ void	CloseCD()
 	AIL_redbook_close(Cd)	;
 
 	Cd = NULL		;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	PlayCD(S32 track)
 {
-#ifdef USE_MSS
 	U32	start, end	;
 
 	if(!CheckCD() || !track || (track>Tracks))	return	;
@@ -169,14 +158,12 @@ void	PlayCD(S32 track)
 
 	AIL_redbook_play(Cd, start, end);
 	Track = track		;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	ChangeVolumeCD(S32 volume)
 {
-#ifdef USE_MSS
 	if( !CheckCD() )	return ;
 
 	if(volume>127)
@@ -189,37 +176,29 @@ void	ChangeVolumeCD(S32 volume)
 	}
 
 	AIL_redbook_set_volume(Cd, volume)	;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 S32	GetVolumeCD()
 {
-#ifdef USE_MSS
 	return	AIL_redbook_volume(Cd)	;
-#else
-	return 0;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	StopCD()
 {
-#ifdef USE_MSS
 	if( !CheckCD() || !Track)	return 	;
 
 	AIL_redbook_stop(Cd)	;
 	Track = 0		;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	PauseCD()
 {
-#ifdef USE_MSS
 	if( !CheckCD() || !Track || !IsCDPlaying())	return	;
 
 	AIL_redbook_track_info(Cd, Track, NULL, &End);
@@ -227,27 +206,23 @@ void	PauseCD()
 	PausedTrack = Track		;
 
 	StopCD()			;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 void	ResumeCD()
 {
-#ifdef USE_MSS
 	if( !CheckCD() || !PausedTrack)	return	;
 
 	AIL_redbook_play(Cd, Cur, End)	;
 	Track = PausedTrack		;
 	PausedTrack = 0			;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 S32	IsCDPlaying()
 {
-#ifdef USE_MSS
 	S32	playing	;
 
 	if( !CheckCD() || !Track)	return FALSE ;
@@ -266,9 +241,6 @@ S32	IsCDPlaying()
 
 
 	return	playing		;
-#else
-	return FALSE		;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
