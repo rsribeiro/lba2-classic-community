@@ -24,12 +24,13 @@ VERSION	= version.obj
 
 OBJETS  = main.obj input.obj config.obj
 
+BUILD_DIR = BUILD
 EXE     = config
 
 # This is the GNU Make equivalent of CURDIR :=
 CURDIR   = $+ $(%cdrive):$(%cwd) $-
 
-$(EXE).exe: $(LIBS) $(OBJETS)
+$(BUILD_DIR)\$(EXE).exe: $(LIBS) $(OBJETS)
 	$(LL) NAME $@ $(LLFLAGS) Library { $LIBS } FILE { $OBJETS }
 
 $(LIBS):
