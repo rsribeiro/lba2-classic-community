@@ -330,11 +330,9 @@
 #error ADELINE: you need to include SMACKER.H
 
 #endif
-#ifdef USE_SMACKER
 	LogPuts("\nInitialising Smacker. Please wait...\n");
 
 	InitSmacker()	;
-#endif
 #endif
 
 //··········································································
