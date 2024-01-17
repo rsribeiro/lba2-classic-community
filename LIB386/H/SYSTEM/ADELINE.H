@@ -4,6 +4,7 @@
 
 //──────────────────────────────────────────────────────────────────────────
 #ifdef	_WIN32
+#pragma pack(push, 8)
 #include	<windows.h>
 #include 	<windowsx.h>
 #include	<winbase.h>
@@ -11,6 +12,7 @@
 #ifndef	_NO_DDRAW
 #include 	<ddraw.h>
 #endif//_NO_DDRAW
+#pragma pack(pop)
 #endif//_WIN32
 
 //──────────────────────────────────────────────────────────────────────────
