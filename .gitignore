@@ -8,5 +8,7 @@
 *.MAP
 SOURCES/BUILD/*
 !SOURCES/BUILD/.gitkeep
+SOURCES/CONFIG/BUILD/*
+!SOURCES/CONFIG/BUILD/.gitkeep
 tags
 .vscode
