@@ -2,7 +2,7 @@
 CPP = wpp386
 CC = wcc386
 WL = wlib
-ASM = ml
+ASM = JWasm
 
 OBJETS=	AFF_OBJ.OBJ
 
@@ -15,9 +15,9 @@ DEF	= _DOS4GW
 LIB     = DOS_OBJ
 !endif
 
-CFLAGS = /6s /d3 /oneatxz /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp8 /v
+CFLAGS = /6s /d3 /od /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp1 /v
 LFLAGS = /c /b /l
-AFLAGS = /DSTACK_CALL /nologo /Cx /Zi /c /WX /Sa /D$(DEF) /Zd /Cp /omf
+AFLAGS = /DSTACK_CALL /nologo /Cx /c /WX /D$(DEF) /Zd /omf /Zp1 /Fl /Fd
 
 #.SILENT
 

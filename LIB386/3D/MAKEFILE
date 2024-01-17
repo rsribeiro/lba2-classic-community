@@ -2,7 +2,7 @@
 CPP = wpp386
 CC = wcc386
 WL = wlib
-ASM = ml
+ASM = JWasm
 
 OBJETS1=TANTAB.OBJ	SINTAB.OBJ	SINTABF.OBJ			&
 	SQRROOT.OBJ	DISTANCE.OBJ	REALVAL.OBJ	ARCSIN.OBJ	&
@@ -56,9 +56,9 @@ LIB     = DOS_3D
 OBJETS2 =
 !endif
 
-CFLAGS += /6s /d3 /oneatxz /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp8 /v
+CFLAGS += /6s /d3 /od /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp1 /v
 LFLAGS = /c /b /l
-AFLAGS += /DSTACK_CALL /nologo /Cx /Zi /c /WX /Sa /Zd /Cp /omf
+AFLAGS += /DSTACK_CALL /nologo /Cx /c /WX /Zd /omf /Zp1 /Fl /Fd
 
 #.SILENT
 

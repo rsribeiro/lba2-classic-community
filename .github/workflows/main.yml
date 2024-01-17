@@ -18,10 +18,10 @@ jobs:
         with:
           version: "2.0-64"
 
-      - name: Set up Visual Studio shell
-        uses: egor-tensin/vs-shell@v2
-        with:
-          arch: x86
+      - name: Download JWasm
+        run: |
+          Invoke-WebRequest -Uri "https://github.com/Baron-von-Riedesel/JWasm/releases/download/v2.17/JWasm_v217_win32.zip" -outfile "$env:GITHUB_WORKSPACE\jwasm.zip" -Verbose
+          Expand-Archive "$env:GITHUB_WORKSPACE\jwasm.zip" -DestinationPath "C:\jwasm" -Force -Verbose
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,6 +37,7 @@ jobs:
         run: |
           echo "LIB386_PATH=$env:GITHUB_WORKSPACE\LIB386" >> $env:GITHUB_ENV
           echo "INCLUDE=$env:GITHUB_WORKSPACE\LIB386;$env:GITHUB_WORKSPACE\LIB386\H;$env:INCLUDE" >> $env:GITHUB_ENV
+          echo "PATH=C:\jwasm;$env:PATH" >> $env:GITHUB_ENV
 
       - name: Print environment variables
         run: |
