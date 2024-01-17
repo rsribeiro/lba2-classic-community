@@ -32,13 +32,11 @@ extern	void		NewProc08(U32 user) ;
 	modify	[]
 
 //──────────────────────────────────────────────────────────────────────────
-/*
-void	SetDivisor(U32 counter)	;
+extern void	SetDivisor(U32 counter)	;
 
 #pragma aux SetDivisor	"*"	\
 	parm caller	[ecx]	\
 	modify	[eax]
-*/
 //──────────────────────────────────────────────────────────────────────────
 #define	ManageTime()
 

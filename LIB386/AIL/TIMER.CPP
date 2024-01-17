@@ -52,6 +52,8 @@ S32	InitTimerAIL()
 
 	AIL_set_timer_frequency( HandleTimer, 200 ) ;
 	AIL_start_timer( HandleTimer ) ;
+#else
+	InitTimer();
 #endif
 	RegisterInitClear( (VOID_FUNC *)InitTimerAIL, NULL ) ;
 

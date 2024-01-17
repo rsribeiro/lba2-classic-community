@@ -39,14 +39,14 @@ CmptMemoTimerRef	dd	0000
 MemoTimerRefHR		dd	0000
 MemoTimerRef		dd	0000
 
-;Cmpt_18			dw	00
+Cmpt_18			dw	00
 Cmpt_50Hz		db	0
 
-;		public	SYSCALL	Old_PM08_Sel
-;		public	SYSCALL	Old_PM08_Off
+		public	SYSCALL	Old_PM08_Sel
+		public	SYSCALL	Old_PM08_Off
 
-;Old_PM08_Sel		dw	0
-;Old_PM08_Off		dd	0
+Old_PM08_Sel		dw	0
+Old_PM08_Off		dd	0
 
 TimerDataEnd		label	dword
 
@@ -57,8 +57,8 @@ TimerDataEnd		label	dword
 		public	SYSCALL	TimerStart	; for VMM_lock !!!
 		public	SYSCALL	TimerEnd
 
-;		public	SYSCALL	SetDivisor
-;		public	SYSCALL	NewIntPM08
+		public	SYSCALL	SetDivisor
+		public	SYSCALL	NewIntPM08
 		public	SYSCALL	NewProc08
 		public	SYSCALL	SaveTimer
 		public	SYSCALL	RestoreTimer
@@ -141,8 +141,6 @@ SetTimerHR	endp
 ;	parm	[ecx]
 ;	modify	[eax]
 
-Comment	@
-
 SetDivisor      proc
 
                 cli
@@ -160,12 +158,8 @@ SetDivisor      proc
 
 SetDivisor      endp
 
-	@
-
 ;----------------------------------------------------------------------------
 TimerStart	label	dword
-
-Comment	@
 
 NewIntPM08	proc	far
 
@@ -223,8 +217,6 @@ oldint08:
 		retf
 
 NewIntPM08	endp
-
-	@
 
 ;----------------------------------------------------------------------------
 NewProc08	proc

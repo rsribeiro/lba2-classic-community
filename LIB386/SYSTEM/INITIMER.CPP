@@ -55,8 +55,8 @@ extern	void __interrupt NewIntPM08(void)		;
 #pragma	aux NewIntPM08	"*"
 
 //-------------------------------------------------------------------------
-//extern	U32	Old_PM08_Off	;
-//extern	U16	Old_PM08_Sel	;
+extern	U32	Old_PM08_Off	;
+extern	U16	Old_PM08_Sel	;
 
 extern  U32	TimerDataStart	;
 extern  U32	TimerDataEnd	;
@@ -87,7 +87,7 @@ static inline void UnlockVMMTimer()
 	AIL_vmm_unlock_range(&TimerDataStart, &TimerDataEnd);
 #endif
 }
-/*
+
 //-------------------------------------------------------------------------
 void	InitTimer()
 {
@@ -148,7 +148,7 @@ void	ClearTimer()
 
 	UnlockVMMTimer()		;
 }
-*/
+
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 #endif//_WIN32
