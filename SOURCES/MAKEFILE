@@ -4,11 +4,11 @@ CC = wcc386
 WL = wlib
 LL = wlink
 WRC = wrc
-ASM = ml
+ASM = JWasm
 PCHDIR =
 
-AFLAGS  = /DSTACK_CALL /nologo /Cx /Zi /c /WX /Sa /Zd /omf
-CFLAGS  = /6s /d3 /oneatxz /s /wx /mf /hd /zp8 /v /fh=$(PCHDIR)lba.pch
+AFLAGS  = /DSTACK_CALL /nologo /Cx /c /WX /Zd /omf /Zp1 /Fl /Fd
+CFLAGS  = /6s /d3 /od /s /wx /mf /hd /zp1 /v /fh=$(PCHDIR)lba.pch
 LLFLAGS = OP CASEEXACT,STACK=7000,SYMF,MAP,DOSSEG,VERBOSE
 LFLAGS  = /c /b /l
 
@@ -137,4 +137,5 @@ clean: .SYMBOLIC
 	del /s /q *.pch
 	del /s /q *.lst
 	del /s /q *.def
+	del /s /q *.sym
 	@cd $(CURDIR)
