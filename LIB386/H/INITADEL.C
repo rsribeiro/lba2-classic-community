@@ -223,6 +223,11 @@
 	if(!FindAndRemoveParam("/CPUNodetect"))
 	{
 		ProcessorIdentification();
+
+		if (ProcessorFeatureFlags.MMX) {
+			LogPuts("MMX support detected... overriding");
+			ProcessorFeatureFlags.MMX = 0;
+		}
 	}
 
 	DisplayCPU()			;
