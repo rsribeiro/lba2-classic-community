@@ -8,7 +8,7 @@
 /*──────────────────────────────────────────────────────────────────────────*/
 
 /*--------- divers ---------------------------*/
-#ifdef	ONE_GAME_DIRECTORY
+#ifndef	DEBUG_TOOLS
 S32	DebugFps = FALSE ;
 #else
 S32	DebugFps = TRUE ;
