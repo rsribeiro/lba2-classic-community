@@ -534,7 +534,6 @@ S32	GetMasterVolumeSample()
 
 S32	FadeOutSamples( S32 delay )
 {
-#ifdef USE_MSS
 	S32	delta	;
 
 	if(!SamplesFade)
@@ -569,16 +568,12 @@ S32	FadeOutSamples( S32 delay )
 	}
 
 	return delta	;
-#else
-	return 0;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
 
 S32	FadeInSamples( S32 delay )
 {
-#ifdef USE_MSS
 	S32	delta	;
 
 	if(SamplesFade)
@@ -613,9 +608,6 @@ S32	FadeInSamples( S32 delay )
 	}
 
 	return delta	;
-#else
-	return 0;
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
@@ -1092,8 +1084,10 @@ S32	GetSamplePoly()
 
 		count++	;
 	}
-#endif
 	return count	;
+#else
+	return -1	;
+#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████

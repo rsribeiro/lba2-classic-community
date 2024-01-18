@@ -57,12 +57,11 @@ static void	ManageStream()
 	{
 		AIL_service_stream(Stream, 0)	;
 	}
-
+#endif
 	if(StreamManageProc)
 	{
 		StreamManageProc()	;
 	}
-#endif
 }
 
 //████████████████████████████████████████████████████████████████████████████
@@ -119,7 +118,6 @@ void	PlayStream(char *name)
 
 void	ChangeVolumeStream(S32 volume)
 {
-#ifdef USE_MSS
 	if(volume>127)
 	{
 		volume = 127	;
@@ -132,7 +130,7 @@ void	ChangeVolumeStream(S32 volume)
 	StreamVolume = volume	;
 
 	if( !Sample_Driver_Enabled || !Stream )	return ;
-
+#ifdef USE_MSS
 	AIL_set_stream_volume(Stream,
 #ifdef	_WIN32
 			UseWaveMixer?StreamVolume:

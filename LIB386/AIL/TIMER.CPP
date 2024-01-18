@@ -21,9 +21,8 @@ void	InitAIL()
 {
 #ifdef USE_MSS
 	AIL_startup()	;
-
-	RegisterInitClear( InitAIL, ClearAIL ) ;
 #endif
+	RegisterInitClear( InitAIL, ClearAIL ) ;
 }
 
 //████████████████████████████████████████████████████████████████████████████
