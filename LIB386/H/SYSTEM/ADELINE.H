@@ -10,6 +10,7 @@
 #include	<winbase.h>
 #include 	<mmsystem.h>
 #ifndef	_NO_DDRAW
+#include	<initguid.h>
 #include 	<ddraw.h>
 #endif//_NO_DDRAW
 #pragma pack(pop)
