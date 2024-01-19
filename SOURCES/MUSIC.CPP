@@ -299,6 +299,7 @@ void	InitTabTracks( void )
 
 void	PlayMusic( S32 num, S32 playit )
 {
+#ifndef DEMO //Demo crashes when dereferencing PtrTrackCD
 	NextMusic = -1 ;
 
 	PIRACY_PROTECT() ;
@@ -350,6 +351,7 @@ void	PlayMusic( S32 num, S32 playit )
 
 		UnlockTimer() ;
 	}
+#endif
 }
 
 /*──────────────────────────────────────────────────────────────────────────*/
