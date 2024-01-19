@@ -86,7 +86,7 @@ LongRotatePointM proc
 
 		psrad		mm6, 13		; mm6 = Zl'Z  Zl'XY		3
 
-		movd		[X0], mm0
+		movq		qword ptr [X0], mm0
 		paddd		mm6, mm7	; mm6 =  Z'Z   Z'XY		3
 
 		movq		mm7, mm6	; mm7 =  Z'Z   Z'XY		3

@@ -47,7 +47,7 @@ ClearBoxVESAM		PROC
 			shr	ebp, 16
 			and	eax, 0FFFFh
 
-			movd	mm0, [ClearColor]
+			movq	mm0, qword ptr [ClearColor]
 			mov	ecx, ebx
 
 			add	edi, [edx+ebp*4]
