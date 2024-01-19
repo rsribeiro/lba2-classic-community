@@ -48,7 +48,7 @@ LongRotTransListM	proc
 NextPoint:
 		movq		mm6, [esi+ecx]	; mm6 = Yh Yl Xh Xl
 
-		movq		mm5, [esi+ecx+8]; mm5 = 0  0  Zh Zl
+		movd		mm5, [esi+ecx+8]; mm5 = 0  0  Zh Zl
 		paddd		mm6, mm6
 
 		movq		mm7, mm6	; mm6 = Yh Yl Xh Xl
@@ -56,7 +56,7 @@ NextPoint:
 
 		movq		mm4, mm5	; mm4 = 0  0  Zh Zl
 
-		movq		mm7, [esi+ecx+4]; mm7 = 0  0  Yh Yl
+		movd		mm7, [esi+ecx+4]; mm7 = 0  0  Yh Yl
 		psllq		mm5, 16		; mm5 = 0  Zh Zl 0
 
 		movq		mm0, [ebx]	; mm0 = 0  3  2  1		1
@@ -120,7 +120,7 @@ NextPoint:
 
 		paddd		mm5, [ebx+40]	; mm5 =   .    Z'  + LONG TRANS
 
-		movq		[edi+ecx+8], mm5
+		movd		[edi+ecx+8], mm5
 
 		add		ecx, 12
 		jnz		NextPoint

@@ -51,7 +51,7 @@ ClearBoxM		PROC
 			sub 	ebx, esi		; deltaY
 			mov	ecx, eax
 
-			movd	mm0, [ClearColor]
+			movq	mm0, qword ptr [ClearColor]
 
 			test	eax, 8
 			jnz	odd
