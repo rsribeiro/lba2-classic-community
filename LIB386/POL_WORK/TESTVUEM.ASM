@@ -25,12 +25,12 @@ TestVuePolyM		PROC	; Pentium 13
 ;(x2-x1)*(y1-y3)-(y2-y1)*(x1-x3)
 ;   P1  *  P2   -   P3  *  P4
 
-			movq		mm0, [esi]	; .  . Y0 X0
+			movd		mm0, [esi]	; .  . Y0 X0
 
-			movq		mm1, [esi+16]	; .  . Y1 X1
+			movd		mm1, [esi+16]	; .  . Y1 X1
 			movq		mm3, mm0
 
-			movq		mm2, [esi+32]	; .  . Y2 X2
+			movd		mm2, [esi+32]	; .  . Y2 X2
 			punpcklwd	mm0, mm1	; MM0 = Y1 Y0 X1 X0
 
 			punpcklwd	mm3, mm2	; MM3 = Y2 Y0 X2 X0

@@ -86,7 +86,7 @@ InverseRotatePointM	PROC
 
 		psrad		mm4, 14
 
-		movd		[X0], mm0
+		movq		qword ptr [X0], mm0
 
 		movd		[Z0], mm4
 

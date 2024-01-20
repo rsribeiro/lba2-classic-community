@@ -67,7 +67,7 @@ RotatePointM	proc
 
 		psrad		mm2, 14		; mm1 =  .     Z'
 
-		movd		[X0], mm5
+		movq		qword ptr [X0], mm5
 
 		;
 

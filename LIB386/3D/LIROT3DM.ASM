@@ -105,7 +105,7 @@ LongInverseRotatePointM proc
 
 		psrad		mm4, 13		; mm4 = Zl'Z  Zl'XY		3
 
-		movd		[X0], mm0
+		movq		qword ptr [X0], mm0
 		paddd		mm4, mm5	; mm4 =  Z'Z   Z'XY		3
 
 		movq		mm5, mm4	; mm5 =  Z'Z   Z'XY		3
