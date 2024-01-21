@@ -94,6 +94,9 @@ endkey:
 			return lRet 					;
 	        }
 
+	case WM_SYSCOMMAND://this prevents menu alt key from opening the menu when game is in windowed mode
+		if(wParam==SC_KEYMENU && (lParam>>16)<=0) return 0;
+		return OldKeybWindowProc(hWnd, message, wParam, lParam);
 	}
 
 	return	OldKeybWindowProc(hWnd, message, wParam, lParam) ;
