@@ -18,19 +18,19 @@ OBJETS1	=	FASTCPY.OBJ	FASTCPYI.OBJ	FASTCPYF.OBJ	FASTCPYM.OBJ	&
 !ifeq BT NT
 CFLAGS	= /D_WIN32 /fh=NT.PCH
 AFLAGS	= /D_WIN32
-LIB     = NT_SYSS
+LIB     = NT_SYSR
 OBJETS2 =	WINSYS.OBJ	PATCH.OBJ	TIMERWIN.OBJ	KEYBWIN.OBJ
 !else
 CFLAGS	= /D_DOS4GW /fh=DOS.PCH
 AFLAGS	= /D_DOS4GW
-LIB     = DOS_SYSS
+LIB     = DOS_SYSR
 OBJETS2 = 	DOSMALLO.OBJ	A_MALLOC.OBJ	KEYBDOS.OBJ	TIMERDOS.OBJ	&
 		DOSSYS.OBJ
 !endif
 
-CFLAGS += /6s /d3 /od /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp1 /v
+CFLAGS += /5r /d3 /otexan /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp1 /v
 LFLAGS  = /c /b /l
-AFLAGS += /DSTACK_CALL /nologo /Cx /c /WX /Zd /omf /Zp1 /Fl /Fd
+AFLAGS += /DREG_CALL /nologo /Cx /c /WX /Zd /omf /Fl /Fd
 
 #.SILENT
 

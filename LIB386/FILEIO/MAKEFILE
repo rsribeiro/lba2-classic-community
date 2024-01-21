@@ -10,18 +10,18 @@ OBJETS1 =	PCX.OBJ		LOADPCX.OBJ	SAVEPCX.OBJ
 !ifeq BT NT
 CFLAGS	= /D_WIN32 /fh=NT.PCH
 AFLAGS	= /D_WIN32
-LIB     = NT_FIOS
+LIB     = NT_FIOR
 OBJETS2 =
 !else
 CFLAGS	= /D_DOS4GW /fh=DOS.PCH
 AFLAGS	= /D_DOS4GW
-LIB     = DOS_FIOS
+LIB     = DOS_FIOR
 OBJETS2 =
 !endif
 
-CFLAGS += /6s /d3 /od /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp1 /v
+CFLAGS += /5r /d3 /otexan /s /wx /mf /hd /DLIB_LOCAL /bt=$(BT) /zp8 /v
 LFLAGS  = /c /b /l
-AFLAGS += /DSTACK_CALL /nologo /Cx /c /WX /Zd /omf /Zp1 /Fl /Fd
+AFLAGS += /DREG_CALL /nologo /Cx /c /WX /Zd /omf /Fl /Fd
 
 #.SILENT
 
