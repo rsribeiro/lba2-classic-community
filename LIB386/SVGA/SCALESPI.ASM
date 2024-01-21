@@ -97,7 +97,10 @@ IFDEF	_WIN32
 x:
 		org	ScaleSpritePatch
 
-		jmp	NEAR PTR ScaleSpriteInit; 5 bytes
+		jmp	short ScaleSpriteInit; 2 + 3 bytes
+		nop
+		nop
+		nop
 
 		org	x
 ENDIF

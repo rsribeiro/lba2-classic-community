@@ -79,7 +79,10 @@ IFDEF	_WIN32
 x:
 		org	ScaleSpriteTranspPatch
 
-		jmp	NEAR PTR ScaleSpriteTranspInit; 5 bytes
+		jmp	short ScaleSpriteTranspInit; 2 + 3 bytes
+		nop
+		nop
+		nop
 
 		org	x
 ELSE
